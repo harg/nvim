@@ -203,7 +203,12 @@ return {
     event = "VeryLazy",
     version = false,
     config = function()
-      require("mini.completion").setup()
+      require("mini.completion").setup({
+        window = {
+          info = { border = "single" },
+          signature = { border = "single" },
+        }, 
+      })
     end
   },
 
@@ -276,16 +281,25 @@ return {
       })
 
       -- Change the Diagnostic symbols in the sign column (gutter)
-      -- local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-      local signs = { Error = "●", Warn = "●", Hint = "●", Info = "●" }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      -- local signs = { Error = "●", Warn = "●", Hint = "●", Info = "●" }
+      -- for type, icon in pairs(signs) do
+      --   local hl = "DiagnosticSign" .. type
+      --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      -- end
+
+      -- Highlight line number instead of having icons in sign column
+      for _, diag in ipairs({ "Error", "Warn", "Info", "Hint" }) do
+        vim.fn.sign_define("DiagnosticSign" .. diag, {
+          text = "",
+          texthl = "DiagnosticSign" .. diag,
+          linehl = "",
+          numhl = "DiagnosticSign" .. diag,
+        })
       end
 
       vim.diagnostic.config({
         virtual_text = {
-          prefix = '●'
+          prefix = ' ●'
         }
       })
 
