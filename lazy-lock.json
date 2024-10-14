@@ -1,11 +1,8 @@
 {
   "lazy.nvim": { "branch": "main", "commit": "1159bdccd8910a0fd0914b24d6c3d186689023d9" },
-  "mini.completion": { "branch": "main", "commit": "2b877876ec7c77973a512083e2aa3f13c61c2abe" },
   "mini.diff": { "branch": "main", "commit": "24d46798be8a358d38d3adc92c7ebcbb2d6f67e0" },
+  "mini.extra": { "branch": "main", "commit": "67b38cb3a1b9523c0fae96ced6cdf06e00c1cbee" },
   "mini.files": { "branch": "main", "commit": "f5d06532a9b8cfff0f17226bf8ae7b15227ddb88" },
   "mini.pick": { "branch": "main", "commit": "6d66ae9eb0b75261f1842788dda611285b6f065f" },
-  "nvim-lspconfig": { "branch": "master", "commit": "c38af37e4ee71d70b7d60267d96b0a83e5d346f5" },
-  "nvim-treesitter": { "branch": "master", "commit": "19079207ba4a8c7ed956f40a111a22b1a2dfa6e8" },
-  "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "rose-pine": { "branch": "main", "commit": "d396005db5bbd1d4ec7772a7c96c96f4c4802328" }
 }

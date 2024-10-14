@@ -9,7 +9,7 @@ map("v", "<C-c>", "\"+ygv<Esc>", { desc = "Copy to system clipboard" }) -- copy 
 -- map("i", "<C-v>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
 -- map("i", "<C-v>", [[<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>]])
 -- map("i", "<C-v>", "<Esc>v\"+pgv<Esc>a", { desc = "Paste from system clipboard" }) -- paste from system clipboard
-map("i", "<C-v>", "<Esc>\"+P<Esc>", { desc = "Paste from system clipboard" }) -- paste from system clipboard
+map("i", "<C-v>", "<Esc>\"+p", { desc = "Paste from system clipboard" }) -- paste from system clipboard
 map("v", "<C-v>", "\"+pgv<Esc>", { desc = "Paste from system clipboard" }) -- paste from system clipboard
 
 map("v", "<C-x>", "\"+x", { desc = "Cut from system clipboard" }) -- cut to system clipboard

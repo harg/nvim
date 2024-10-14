@@ -33,6 +33,7 @@ opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
 opt.showcmd = false -- don't show commands
+opt.showmode = false -- don't show mode
 
 -- turn on termguicolors for tokyonight colorscheme to work
 -- (have to use iterm2 or any other true color terminal)
@@ -92,6 +93,9 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- turn off swapfile
 opt.swapfile = false
 
+
+-- use forld markers
+opt.foldmethod = "marker"
 
 ---------------------------------------------------------------
 

@@ -1,7 +1,32 @@
 return {
-  "nvim-lua/plenary.nvim",
+  { 
+    "rose-pine/neovim",
+-- {{{
+    name = "rose-pine",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("rose-pine").setup({
+        styles = {
+          bold = false,
+          italic = false,
+          transparency = false,
+        },
+      })
+
+      vim.cmd("colorscheme rose-pine-moon")
+    end
+ -- }}} 
+  },
+  {
+    "echasnovski/mini.extra",
+    config = function()
+      require("mini.extra").setup()
+    end
+  },
   {
     "echasnovski/mini.files",
+-- {{{
     opts = {
       windows = {
         preview = false,
@@ -25,8 +50,6 @@ return {
         trim_right = ">",
       },
       options = {
-        -- Whether to use for editing directories
-        -- Disabled by default in LazyVim because neo-tree is used for that
         use_as_default_explorer = true,
       },
     },
@@ -94,9 +117,11 @@ return {
 
 
     end,
+ -- }}} 
   },
   {
     "echasnovski/mini.diff",
+-- {{{
     event = "VeryLazy",
     delay = {
       text_change = 100, -- default 200
@@ -111,10 +136,12 @@ return {
         },
       },
     },
+ -- }}} 
   },
 
   {
     "echasnovski/mini.pick",
+-- {{{
     keys = {
       {
         "<leader><leader>",
@@ -123,6 +150,121 @@ return {
         end,
         desc = "Open mini.pick (Files)",
       },
+      {
+        "<leader>/",
+        function()
+          require("mini.pick").builtin.grep()
+        end,
+        desc = "Open mini.pick (Grep)",
+      },
+      {
+        "<F12>",
+        function()
+          require("mini.pick").builtin.files(nil, { source = { cwd = vim.fn.stdpath("config") } })
+        end,
+        desc = "Open mini.pick (Files)",
+      },
+      {
+        "<leader>b",
+        function()
+          require("mini.pick").builtin.buffers()
+        end,
+        desc = "Open mini.pick (Buffers)",
+      },
+      {
+        "gr",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'references' })
+        end,
+        desc = "Open mini.pick (LSP References)",
+      },
+      {
+        "gD",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'declaration' })
+        end,
+        desc = "Open mini.pick (LSP Declaration)",
+      },
+      {
+        "gd",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'definition' })
+        end,
+        desc = "Open mini.pick (LSP Definition)",
+      },
+      {
+        "gi",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'implementation' })
+        end,
+        desc = "Open mini.pick (LSP Implementation)",
+      },
+      {
+        "gy",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'type_definition' })
+        end,
+        desc = "Open mini.pick (LSP Type Definition)",
+      },
+      {
+        "<leader>d",
+        function()
+          require("mini.extra").pickers.diagnostic({ scope = 'current' })
+        end,
+        desc = "Open mini.pick (LSP Diagnostics)",
+      },
+      {
+        "<leader>D",
+        function()
+          require("mini.extra").pickers.diagnostic({ scope = 'all' })
+        end,
+        desc = "Open mini.pick (LSP Workspace Diagnostics)",
+      },
+      {
+        "<leader>s",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'document_symbol' })
+        end,
+        desc = "Open mini.pick (LSP Symbols)",
+      },
+      {
+        "<leader>S",
+        function()
+          require("mini.extra").pickers.lsp({ scope = 'workspace_symbol' })
+        end,
+        desc = "Open mini.pick (LSP Workspace Symbols)",
+      },
+      {
+        "<leader>?",
+        function()
+          require("mini.extra").pickers.commands()
+        end,
+        desc = "Open mini.pick (Neovim commands)",
+      },
+      {
+        "<leader>fgb",
+        mode = { "n" },
+        function()
+          require("mini.extra").pickers.git_branches({ scope = 'local' }, {
+            source = {
+              name = "Git Branches",
+              choose = function(item)
+                local branch = item:match("%s+(%S+)%s+")
+                local on_exit = function(obj)
+                  if obj.code == 0 then
+                    print("Switch to branch '" .. branch .. "'")
+                  else
+                    print(vim.inspect(obj))
+                    print("Failed to switch branch '" .. branch .. "'")
+                  end
+                end
+                vim.system({"git", "switch", branch}, { text = false }, on_exit)
+              end,
+            },
+          })
+        end,
+        desc = "Open mini.pick (Git Branches)",
+      },
     },
     config = function()
       local pick = require('mini.pick')
@@ -130,25 +272,11 @@ return {
         source = { show = pick.default_show }, --disable icons
       })
     end
-  },
-  { 
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = false,
-    config = function()
-      require("rose-pine").setup({
-        styles = {
-          bold = false,
-          italic = false,
-          transparency = false,
-        },
-      })
-
-      vim.cmd("colorscheme rose-pine-moon")
-    end
+ -- }}} 
   },
   {
     "nvim-treesitter/nvim-treesitter",
+-- {{{
     event = { "BufReadPre", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
@@ -196,10 +324,12 @@ return {
         },
       })
     end,
+ -- }}} 
   },
 
   {
     "echasnovski/mini.completion", 
+-- {{{
     event = "VeryLazy",
     version = false,
     config = function()
@@ -210,17 +340,16 @@ return {
         }, 
       })
     end
+ -- }}} 
   },
 
   {
     "neovim/nvim-lspconfig",
+-- {{{
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       -- import lspconfig plugin
       local lspconfig = require("lspconfig")
-
-      -- import cmp-nvim-lsp plugin
-      -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
       local keymap = vim.keymap -- for conciseness
 
@@ -239,44 +368,21 @@ return {
           local opts = { buffer = ev.buf, silent = true }
 
           -- set keybinds
-          opts.desc = "Show LSP references"
-          keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
-
-          opts.desc = "Go to declaration"
-          keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
-
-          opts.desc = "Show LSP definitions"
-          keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-          opts.desc = "Show LSP implementations"
-          keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
-          opts.desc = "Show LSP type definitions"
-          keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
           opts.desc = "See available code actions"
-          keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+          keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-          opts.desc = "Smart rename"
-          keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-
-          -- opts.desc = "Show buffer diagnostics"
-          -- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-
-          opts.desc = "Show line diagnostics"
-          keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+          opts.desc = "Rename symbol"
+          keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
 
           opts.desc = "Go to previous diagnostic"
-          keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+          keymap.set("n", "(d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 
           opts.desc = "Go to next diagnostic"
-          keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+          keymap.set("n", ")d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
           opts.desc = "Show documentation for what is under cursor"
-          keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-          opts.desc = "Restart LSP"
-          keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+          keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
         end,
       })
 
@@ -303,81 +409,12 @@ return {
         }
       })
 
-
       -- local lspservers =  {"tsserver", "html", "cssls", "tailwindcss", "emmet_ls", "gopls"}
       local lspservers =  {"ts_ls", "gopls"}
       for i, v in ipairs(lspservers) do
         lspconfig[v].setup({})
       end
-
-      -- used to enable autocompletion (assign to every lsp server config)
-      -- local capabilities = cmp_nvim_lsp.default_capabilities()
-
-
-      -- local lspservers =  {"tsserver", "html", "cssls", "tailwindcss", "emmet_ls", "gopls"}
-      -- local lspservers =  {"ts_ls", "gopls"}
-      -- for i, v in ipairs(lspservers) do
-      --   lspconfig[v].setup({
-      --     capabilities = capabilities,
-      --   })
-      -- end
-
-
-      --
-      -- mason_lspconfig.setup_handlers({
-      --   -- default handler for installed servers
-      --   function(server_name)
-      --     lspconfig[server_name].setup({
-      --       capabilities = capabilities,
-      --     })
-      --   end
-      -- ["svelte"] = function()
-      --   -- configure svelte server
-      --   lspconfig["svelte"].setup({
-      --     capabilities = capabilities,
-      --     on_attach = function(client, bufnr)
-      --       vim.api.nvim_create_autocmd("BufWritePost", {
-      --         pattern = { "*.js", "*.ts" },
-      --         callback = function(ctx)
-      --           -- Here use ctx.match instead of ctx.file
-      --           client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-      --         end,
-      --       })
-      --     end,
-      --   })
-      -- end,
-      -- ["graphql"] = function()
-      --   -- configure graphql language server
-      --   lspconfig["graphql"].setup({
-      --     capabilities = capabilities,
-      --     filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-      --   })
-      -- end,
-      -- ["emmet_ls"] = function()
-      --   -- configure emmet language server
-      --   lspconfig["emmet_ls"].setup({
-      --     capabilities = capabilities,
-      --     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-      --   })
-      -- end,
-      -- ["lua_ls"] = function()
-      --   -- configure lua server (with special settings)
-      --   lspconfig["lua_ls"].setup({
-      --     capabilities = capabilities,
-      --     settings = {
-      --       Lua = {
-      --         -- make the language server recognize "vim" global
-      --         diagnostics = {
-      --           globals = { "vim" },
-      --         },
-      --         completion = {
-      --           callSnippet = "Replace",
-      --         },
-      --       },
-      --     },
-      --   })
-      -- end,
-      --   })
     end,
   }
+ -- }}} 
 }
