@@ -415,6 +415,20 @@ return {
         lspconfig[v].setup({})
       end
     end,
-  }
  -- }}} 
+  },
+  {
+    'nanozuki/tabby.nvim',
+    -- event = 'VimEnter',
+    event = 'VeryLazy',
+    config = function()
+      require('tabby').setup({
+        preset = 'active_wins_at_tail',
+        option = {
+          nerdfont = false,
+          -- lualine_theme = 'rose-pine',
+        },
+      })
+    end,
+  }
 }

@@ -34,3 +34,21 @@ map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new
 
 -- Terminal
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
+
+-- Spell
+map("n", "<leader>sp", "<cmd>set spell!<CR>", { desc = "Toogle spell" })
+map("n", ")s", "]s", { desc = "Next misspelled word" })
+map("n", "(s", "[s", { desc = "Previous misspelled word" })
+local function choose_lang()
+  local choice = vim.fn.input("Choose spelllang fr/en : ")
+  -- Process the choice
+  if choice == "fr" or choice == "en" then
+    vim.opt.spelllang = choice
+  else
+    print("\nInvalid choice")
+  end
+end
+vim.api.nvim_create_user_command("ChooseLang", choose_lang, {})
+map("n", "<leader>sl", "<cmd>ChooseLang<CR>", { desc = "Choose spelllang" })
+
+
