@@ -5,7 +5,7 @@ local o = vim.o
 local g = vim.g
 
 -- opt.shellslash = true
-opt.isfname:append({ '(', ')' }) -- fix filepath containing parenthesis
+opt.isfname:append { "(", ")" } -- fix filepath containing parenthesis
 
 -- disable nvim intro
 opt.shortmess:append "sI"
@@ -33,6 +33,7 @@ opt.linebreak = true -- wraps text at the end of a word
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 
+-- gui
 opt.showcmd = false -- don't show commands
 opt.showmode = false -- don't show mode
 
@@ -47,7 +48,6 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 
 -- clipboard
 -- opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-
 
 -- vim.g.clipboard = {
 --   name = "clip.exe (Copy Only)",
@@ -93,7 +93,6 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
-
 
 -- use forld markers
 opt.foldmethod = "marker"

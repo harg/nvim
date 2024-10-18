@@ -1,32 +1,34 @@
 return {
-  { 
+  {
     "rose-pine/neovim",
--- {{{
+    -- {{{
     name = "rose-pine",
     lazy = false,
     priority = 1000,
     config = function()
-      require("rose-pine").setup({
+      require("rose-pine").setup {
         styles = {
           bold = false,
           italic = false,
           transparency = false,
         },
-      })
+      }
 
-      vim.cmd("colorscheme rose-pine-moon")
-    end
- -- }}} 
+      vim.cmd "colorscheme rose-pine-moon"
+    end,
+    -- }}}
   },
   {
     "echasnovski/mini.extra",
+    -- {{{
     config = function()
       require("mini.extra").setup()
-    end
+    end,
+    -- }}}
   },
   {
     "echasnovski/mini.files",
--- {{{
+    -- {{{
     opts = {
       windows = {
         preview = false,
@@ -83,7 +85,7 @@ return {
       local toggle_dotfiles = function()
         show_dotfiles = not show_dotfiles
         local new_filter = show_dotfiles and filter_show or filter_hide
-        require("mini.files").refresh({ content = { filter = new_filter } })
+        require("mini.files").refresh { content = { filter = new_filter } }
       end
 
       local files_set_cwd = function()
@@ -114,14 +116,12 @@ return {
           )
         end,
       })
-
-
     end,
- -- }}} 
+    -- }}}
   },
   {
     "echasnovski/mini.diff",
--- {{{
+    -- {{{
     event = "VeryLazy",
     delay = {
       text_change = 100, -- default 200
@@ -136,12 +136,12 @@ return {
         },
       },
     },
- -- }}} 
+    -- }}}
   },
 
   {
     "echasnovski/mini.pick",
--- {{{
+    -- {{{
     keys = {
       {
         "<leader><leader>",
@@ -160,7 +160,7 @@ return {
       {
         "<F12>",
         function()
-          require("mini.pick").builtin.files(nil, { source = { cwd = vim.fn.stdpath("config") } })
+          require("mini.pick").builtin.files(nil, { source = { cwd = vim.fn.stdpath "config" } })
         end,
         desc = "Open mini.pick (Files)",
       },
@@ -174,63 +174,63 @@ return {
       {
         "gr",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'references' })
+          require("mini.extra").pickers.lsp { scope = "references" }
         end,
         desc = "Open mini.pick (LSP References)",
       },
       {
         "gD",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'declaration' })
+          require("mini.extra").pickers.lsp { scope = "declaration" }
         end,
         desc = "Open mini.pick (LSP Declaration)",
       },
       {
         "gd",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'definition' })
+          require("mini.extra").pickers.lsp { scope = "definition" }
         end,
         desc = "Open mini.pick (LSP Definition)",
       },
       {
         "gi",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'implementation' })
+          require("mini.extra").pickers.lsp { scope = "implementation" }
         end,
         desc = "Open mini.pick (LSP Implementation)",
       },
       {
         "gy",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'type_definition' })
+          require("mini.extra").pickers.lsp { scope = "type_definition" }
         end,
         desc = "Open mini.pick (LSP Type Definition)",
       },
       {
         "<leader>d",
         function()
-          require("mini.extra").pickers.diagnostic({ scope = 'current' })
+          require("mini.extra").pickers.diagnostic { scope = "current" }
         end,
         desc = "Open mini.pick (LSP Diagnostics)",
       },
       {
         "<leader>D",
         function()
-          require("mini.extra").pickers.diagnostic({ scope = 'all' })
+          require("mini.extra").pickers.diagnostic { scope = "all" }
         end,
         desc = "Open mini.pick (LSP Workspace Diagnostics)",
       },
       {
         "<leader>s",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'document_symbol' })
+          require("mini.extra").pickers.lsp { scope = "document_symbol" }
         end,
         desc = "Open mini.pick (LSP Symbols)",
       },
       {
         "<leader>S",
         function()
-          require("mini.extra").pickers.lsp({ scope = 'workspace_symbol' })
+          require("mini.extra").pickers.lsp { scope = "workspace_symbol" }
         end,
         desc = "Open mini.pick (LSP Workspace Symbols)",
       },
@@ -245,11 +245,11 @@ return {
         "<leader>fgb",
         mode = { "n" },
         function()
-          require("mini.extra").pickers.git_branches({ scope = 'local' }, {
+          require("mini.extra").pickers.git_branches({ scope = "local" }, {
             source = {
               name = "Git Branches",
               choose = function(item)
-                local branch = item:match("%s+(%S+)%s+")
+                local branch = item:match "%s+(%S+)%s+"
                 local on_exit = function(obj)
                   if obj.code == 0 then
                     print("Switch to branch '" .. branch .. "'")
@@ -258,7 +258,7 @@ return {
                     print("Failed to switch branch '" .. branch .. "'")
                   end
                 end
-                vim.system({"git", "switch", branch}, { text = false }, on_exit)
+                vim.system({ "git", "switch", branch }, { text = false }, on_exit)
               end,
             },
           })
@@ -267,25 +267,25 @@ return {
       },
     },
     config = function()
-      local pick = require('mini.pick')
-      pick.setup({
+      local pick = require "mini.pick"
+      pick.setup {
         source = { show = pick.default_show }, --disable icons
-      })
-    end
- -- }}} 
+      }
+    end,
+    -- }}}
   },
   {
     "nvim-treesitter/nvim-treesitter",
--- {{{
+    -- {{{
     event = { "BufReadPre", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     config = function()
       -- import nvim-treesitter plugin
-      local treesitter = require("nvim-treesitter.configs")
+      local treesitter = require "nvim-treesitter.configs"
 
       -- configure treesitter
-      treesitter.setup({ -- enable syntax highlighting
+      treesitter.setup { -- enable syntax highlighting
         highlight = {
           enable = true,
         },
@@ -322,34 +322,34 @@ return {
             node_decremental = "<bs>",
           },
         },
-      })
+      }
     end,
- -- }}} 
+    -- }}}
   },
 
   {
-    "echasnovski/mini.completion", 
--- {{{
+    "echasnovski/mini.completion",
+    -- {{{
     event = "VeryLazy",
     version = false,
     config = function()
-      require("mini.completion").setup({
+      require("mini.completion").setup {
         window = {
           info = { border = "single" },
           signature = { border = "single" },
-        }, 
-      })
-    end
- -- }}} 
+        },
+      }
+    end,
+    -- }}}
   },
 
   {
     "neovim/nvim-lspconfig",
--- {{{
+    -- {{{
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       -- import lspconfig plugin
-      local lspconfig = require("lspconfig")
+      local lspconfig = require "lspconfig"
 
       local keymap = vim.keymap -- for conciseness
 
@@ -394,7 +394,7 @@ return {
       -- end
 
       -- Highlight line number instead of having icons in sign column
-      for _, diag in ipairs({ "Error", "Warn", "Info", "Hint" }) do
+      for _, diag in ipairs { "Error", "Warn", "Info", "Hint" } do
         vim.fn.sign_define("DiagnosticSign" .. diag, {
           text = "",
           texthl = "DiagnosticSign" .. diag,
@@ -403,32 +403,67 @@ return {
         })
       end
 
-      vim.diagnostic.config({
+      vim.diagnostic.config {
         virtual_text = {
-          prefix = ' ●'
-        }
-      })
+          prefix = " ●",
+        },
+      }
 
-      -- local lspservers =  {"tsserver", "html", "cssls", "tailwindcss", "emmet_ls", "gopls"}
-      local lspservers =  {"ts_ls", "gopls"}
+      -- local lspservers =  {"ts_ls", "html", "cssls", "tailwindcss", "emmet_ls", "gopls", "denols"}
+      local lspservers = { "ts_ls", "gopls" }
       for i, v in ipairs(lspservers) do
-        lspconfig[v].setup({})
+        lspconfig[v].setup {}
       end
     end,
- -- }}} 
+    -- }}}
   },
   {
-    'nanozuki/tabby.nvim',
-    -- event = 'VimEnter',
-    event = 'VeryLazy',
+    "nanozuki/tabby.nvim",
+    event = "VeryLazy",
     config = function()
-      require('tabby').setup({
-        preset = 'active_wins_at_tail',
+      require("tabby").setup {
+        preset = "active_wins_at_tail",
         option = {
           nerdfont = false,
           -- lualine_theme = 'rose-pine',
         },
-      })
+      }
     end,
-  }
+  },
+  {
+    "stevearc/conform.nvim",
+    -- {{{
+    event = { "BufWritePre" },
+    keys = {
+      {
+        "<leader>fm",
+        function()
+          require("conform").format { async = true, lsp_fallback = true }
+        end,
+        desc = "Format file",
+      },
+    },
+    opts = {
+      async = true,
+      formatters_by_ft = {
+        lua = { "stylua" },
+        go = { "goimports", "gofumpt" },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        yaml = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+        graphql = { "prettierd", "prettier", stop_after_first = true },
+      },
+      format_on_save = { timeout_ms = 500 },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+    },
+    -- }}}
+  },
 }
