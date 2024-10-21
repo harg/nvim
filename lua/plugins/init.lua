@@ -289,6 +289,41 @@ return {
         end,
         desc = "Open mini.pick (Git Branches)",
       },
+      {
+        "<leader>$",
+        function()
+          local preview_func = function(buf_id, item)
+            -- local lines = vim.split(vim.inspect(item), "\n")
+            local lines = { "Name : " .. item }
+            vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+          end
+
+          local show_func = function(buf_id, items_arr, query)
+            -- local lines = vim.tbl_map(function(x)
+            --   return "Gay " .. x
+            -- end, items_arr)
+            -- vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+            local prefix = "Gay "
+
+            for i, str in ipairs(items_arr) do
+              items_arr[i] = prefix .. str
+            end
+            MiniPick.default_show(buf_id, items_arr, query)
+          end
+
+          MiniPick.start {
+            source = {
+              items = { "Harold", "Alix", "Eugénie", "Gustave" },
+              preview = preview_func,
+              show = show_func,
+              choose = function(item)
+                print("Hello " .. item)
+              end,
+            },
+          }
+        end,
+        desc = "Open mini.pick (Example)",
+      },
     },
     config = function()
       local pick = require "mini.pick"
