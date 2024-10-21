@@ -1,4 +1,5 @@
 -- vim.cmd('language en_US.UTF-8')
+vim.api.nvim_set_hl(0, "Normal", { fg = "#e0def4", bg = "#232136" })
 
 local opt = vim.opt
 local o = vim.o

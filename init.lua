@@ -2,6 +2,8 @@
 
 vim.g.mapleader = " "
 
+vim.api.nvim_set_hl(0, "Normal", { fg = "#e0def4", bg = "#232136" })
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

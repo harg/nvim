@@ -138,7 +138,31 @@ return {
     },
     -- }}}
   },
-
+  {
+    "echasnovski/mini.align",
+    -- {{{
+    keys = {
+      { "ga", mode = { "n", "v", "x" } },
+      { "gA", mode = { "n", "v", "x" } },
+    },
+    config = function()
+      require("mini.align").setup()
+    end,
+    -- }}}
+  },
+  {
+    "echasnovski/mini.surround",
+    -- {{{
+    keys = {
+      { "sa", mode = { "n", "v", "x" } },
+      { "sd", mode = { "n", "v", "x" } },
+      { "sr", mode = { "n", "v", "x" } },
+    },
+    config = function()
+      require("mini.surround").setup()
+    end,
+    -- }}}
+  },
   {
     "echasnovski/mini.pick",
     -- {{{
