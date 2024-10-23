@@ -164,6 +164,17 @@ return {
     -- }}}
   },
   {
+    "echasnovski/mini.comment",
+    -- {{{
+    keys = {
+      { "gc", mode = { "n", "v", "x" } },
+    },
+    config = function()
+      require("mini.comment").setup()
+    end,
+    -- }}}
+  },
+  {
     "echasnovski/mini.pick",
     -- {{{
     keys = {
