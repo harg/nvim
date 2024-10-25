@@ -1,23 +1,23 @@
 return {
-  {
-    "rose-pine/neovim",
-    -- {{{
-    name = "rose-pine",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("rose-pine").setup {
-        styles = {
-          bold = false,
-          italic = false,
-          transparency = false,
-        },
-      }
-
-      vim.cmd "colorscheme rose-pine-moon"
-    end,
-    -- }}}
-  },
+  -- {
+  --   "rose-pine/neovim",
+  --   -- {{{
+  --   name = "rose-pine",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("rose-pine").setup {
+  --       styles = {
+  --         bold = false,
+  --         italic = false,
+  --         transparency = false,
+  --       },
+  --     }
+  --
+  --     vim.cmd "colorscheme rose-pine-moon"
+  --   end,
+  --   -- }}}
+  -- },
   {
     "echasnovski/mini.extra",
     -- {{{
@@ -339,7 +339,16 @@ return {
     config = function()
       local pick = require "mini.pick"
       pick.setup {
-        source = { show = pick.default_show }, --disable icons
+        source = {
+          show = pick.default_show, --disable icons
+        },
+        mappings = {
+          choose_in_split = "<A-s>",
+          choose_in_vsplit = "<C-s>",
+        },
+        options = {
+          use_cache = true,
+        },
       }
     end,
     -- }}}
