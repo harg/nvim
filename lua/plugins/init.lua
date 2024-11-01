@@ -277,7 +277,20 @@ return {
         desc = "Open mini.pick (Neovim commands)",
       },
       {
-        "<leader>fgb",
+        "<leader>gg",
+        function()
+          if jit.os == "Windows" then
+            -- CMD /C npm run dev
+            command = { "CMD", "/c", "git ls-files --others --exclude-standard & git diff --name-only" }
+          else
+            command = { "sh", "-c", "git ls-files --others --exclude-standard && git diff --name-only" }
+          end
+          require("mini.pick").builtin.cli({ command = command }, { source = { name = "Git added & modified" } })
+        end,
+        desc = "Open mini.pick (Buffers)",
+      },
+      {
+        "<leader>gb",
         mode = { "n" },
         function()
           require("mini.extra").pickers.git_branches({ scope = "local" }, {
@@ -345,6 +358,13 @@ return {
         mappings = {
           choose_in_split = "<A-s>",
           choose_in_vsplit = "<C-s>",
+          caret_right = "", -- hacky : disable move carret to right and emulate pressing <CR> with <Right>
+          my_choose = {
+            char = "<Right>",
+            func = function()
+              vim.api.nvim_input "\r"
+            end,
+          },
         },
         options = {
           use_cache = true,

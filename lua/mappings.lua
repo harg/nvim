@@ -37,6 +37,7 @@ map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new
 
 -- Terminal
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
+map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>]], { noremap = true, silent = true })
 
 -- Spell
 map("n", "<leader>sp", "<cmd>set spell!<CR>", { desc = "Toogle spell" })

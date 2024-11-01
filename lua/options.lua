@@ -11,13 +11,13 @@ opt.isfname:append { "(", ")" } -- fix filepath containing parenthesis
 -- disable nvim intro
 opt.shortmess:append "sI"
 
--- numbers
+-- numbers & cursor
 opt.relativenumber = false
 opt.number = true
 opt.cursorline = true
 opt.ruler = false
 
-opt.timeoutlen = 500
+opt.timeoutlen = 600
 opt.ttimeoutlen = 10
 opt.updatetime = 250 -- interval for writing swap file to disk, also used by gitsigns
 

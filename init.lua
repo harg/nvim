@@ -78,6 +78,7 @@ require("lazy").setup({ { import = "plugins" } }, {
 
 require "gui"
 require "options"
+require "autocmds"
 
 vim.schedule(function()
   require "mappings"
