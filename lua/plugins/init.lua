@@ -1,4 +1,32 @@
 return {
+  {
+    "vague2k/vague.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("vague").setup {
+        style = {
+          comments = "none",
+          strings = "none",
+        },
+        colors = {
+          hint = "#7894ab",
+        },
+      }
+
+      vim.cmd "colorscheme vague"
+
+      group_styles = {
+        ["StatusLine"] = { fg = "#646477", bg = "#222222" },
+        ["WinSeparator"] = { fg = "#444444" },
+        ["EndOfBuffer"] = { fg = "#444444" },
+      }
+
+      for group, style in pairs(group_styles) do
+        vim.api.nvim_set_hl(0, group, style)
+      end
+    end,
+  },
   -- {
   --   "rose-pine/neovim",
   --   -- {{{
