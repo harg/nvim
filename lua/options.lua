@@ -12,8 +12,8 @@ opt.isfname:append { "(", ")" } -- fix filepath containing parenthesis
 opt.shortmess:append "sI"
 
 -- numbers & cursor
-opt.relativenumber = false
 opt.number = true
+opt.relativenumber = false
 opt.cursorline = true
 opt.ruler = false
 
@@ -75,6 +75,35 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 --     },
 --     cache_enabled = true,
 -- }
+
+if jit.os == "Windows" then
+  vim.g.clipboard = {
+    name = "c0r",
+    copy = {
+      ["+"] = function(lines, regtype)
+        local content = table.concat(lines, "\r\n")
+        require("nvrplug").yank(content)
+      end,
+      ["*"] = function(lines, regtype)
+        local content = table.concat(lines, "\r\n")
+        require("nvrplug").yank(content)
+      end,
+    },
+    paste = {
+      ["+"] = function()
+        local content = require("nvrplug").paste()
+        content = content:gsub("\r\n", "\n")
+        return { vim.split(content, "\n"), "v" }
+      end,
+      ["*"] = function()
+        local content = require("nvrplug").paste()
+        content = content:gsub("\r\n", "\n")
+        return { vim.split(content, "\n"), "v" }
+      end,
+    },
+    cache_enabled = 0,
+  }
+end
 
 -- vim.g.clipboard = {
 --       name = 'OSC 52',

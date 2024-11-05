@@ -22,7 +22,7 @@ map("i", "<C-S>", "<Esc>:update<CR>gi", { noremap = true, desc = "Save current b
 -- window management
 map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
 map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
+map("n", "<leader>s=", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
 map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
 map("n", "<leader>s<Up>", ":resize +5<CR>", { silent = true })
 map("n", "<leader>s<Down>", ":resize -5<CR>", { silent = true })

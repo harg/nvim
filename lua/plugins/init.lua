@@ -459,6 +459,20 @@ return {
     -- {{{
     event = "VeryLazy",
     version = false,
+    keys = {
+      {
+        "<tab>",
+        [[pumvisible() ? "\<c-n>" : "\<tab>"]],
+        mode = "i",
+        expr = true,
+      },
+      {
+        "<s-tab>",
+        [[pumvisible() ? "\<c-p>" : "\<s-tab>"]],
+        mode = "i",
+        expr = true,
+      },
+    },
     config = function()
       require("mini.completion").setup {
         window = {
