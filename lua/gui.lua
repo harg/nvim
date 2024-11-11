@@ -12,5 +12,7 @@ if vim.g.neovide then
 end
 
 if vim.g.nvy then
-  vim.opt.guifont = { "Iosevka Comfy Fixed:h11" }
+  -- vim.opt.guifont = { "Iosevka Comfy Fixed:h11" }
+  vim.opt.guifont = { "Iosevc0r540:h11" }
+  -- vim.opt.guifont = { "Inc0rsolata:h12.5" }
 end

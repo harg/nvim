@@ -127,36 +127,46 @@ opt.swapfile = false
 -- use forld markers
 opt.foldmethod = "marker"
 
+-- Nvim grey palette
+-- Light 1 : #EEF1F8
+-- Light 2 : #E0E2EA
+-- Light 3 : #C4C6CD
+-- Light 5 : #9B9EA4
+--
+-- Dark 1 : #07080d
+-- Dark 2 : #14161B
+-- Dark 3 : #2C2E33
+-- Dark 4 : #4F5258
+
 -- Default with black and white colorscheme
--- group_styles = {
---
---   ["Normal"] = { fg = "#cccccc", bg = "None" },
---   ["Comment"] = { fg = "#777777" },
---   ["String"] = { fg = "#bbbbbb" },
---   ["Function"] = { fg = "#bbbbbb" },
---   ["Identifier"] = { fg = "#dddddd", bold = false },
---   ["Special"] = { fg = "#bbbbbb" },
---   ["Question"] = { fg = "#666666" },
---   ["Directory"] = { fg = "#777777" },
---
---   ["MoreMsg"] = { fg = "#eeeeee", bg = "#444444" },
---   ["QuickFixLine"] = { fg = "#eeeeee", bg = "#444444" },
---   ["StatusLine"] = { fg = "#333333", bg = "#222222" },
---   ["NormalFloat"] = { bg = "None" },
---
---   ["Folded"] = { fg = "#444444" },
---   ["MatchParen"] = { fg = "#ffffff", bold = true },
---   ["WinSeparator"] = { fg = "#444444" },
---
---   ["Search"] = { fg = "#000000", bg = "#777777" },
---   ["CurSearch"] = { fg = "#000000", bg = "#aaaaaa" },
---
---   ["DiagnosticUnnecessary"] = { fg = "#bbbbbb" },
--- }
---
--- for group, style in pairs(group_styles) do
---   vim.api.nvim_set_hl(0, group, style)
--- end
+group_styles = {
+  ["Normal"] = { fg = "#C4C6CD", bg = "#1e1e1e" },
+  ["Comment"] = { fg = "#77797B" },
+  ["String"] = { fg = "#bbbdbf" },
+  ["Function"] = { fg = "#bbbdbf" },
+  ["Identifier"] = { fg = "#dddfe1", bold = false },
+  ["Special"] = { fg = "#BBBDBF" },
+  ["Question"] = { fg = "#66686A" },
+  ["Directory"] = { fg = "#77797B" },
+
+  ["MoreMsg"] = { fg = "#EEF1F8", bg = "#4F5258" },
+  ["QuickFixLine"] = { fg = "#EEF1F8", bg = "#4F5258" },
+  ["StatusLineNC"] = { fg = "#4F5258", bg = "#2C2E33" },
+  ["NormalFloat"] = { bg = "None" },
+
+  ["Folded"] = { fg = "#4F5258" },
+  ["MatchParen"] = { fg = "#ffffff", bold = true },
+  ["WinSeparator"] = { fg = "#4F5258" },
+
+  ["Search"] = { fg = "#07080d", bg = "#77797B" },
+  ["CurSearch"] = { fg = "#07080d", bg = "#AAACAF" },
+
+  ["DiagnosticUnnecessary"] = { fg = "#BBBDBF" },
+}
+
+for group, style in pairs(group_styles) do
+  vim.api.nvim_set_hl(0, group, style)
+end
 
 ---------------------------------------------------------------
 

@@ -1,32 +1,46 @@
 return {
-  {
-    "vague2k/vague.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("vague").setup {
-        style = {
-          comments = "none",
-          strings = "none",
-        },
-        colors = {
-          hint = "#7894ab",
-        },
-      }
-
-      vim.cmd "colorscheme vague"
-
-      group_styles = {
-        ["StatusLine"] = { fg = "#646477", bg = "#222222" },
-        ["WinSeparator"] = { fg = "#444444" },
-        ["EndOfBuffer"] = { fg = "#444444" },
-      }
-
-      for group, style in pairs(group_styles) do
-        vim.api.nvim_set_hl(0, group, style)
-      end
-    end,
-  },
+  -- {
+  --   "zenbones-theme/zenbones.nvim",
+  --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+  --   -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+  --   -- In Vim, compat mode is turned on as Lush only works in Neovim.
+  --   dependencies = "rktjmp/lush.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   -- you can set set configuration options here
+  --   config = function()
+  --     vim.g.zenbones_darken_comments = 45
+  --     vim.cmd.colorscheme "zenwritten"
+  --   end,
+  -- },
+  -- {
+  --   "vague2k/vague.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("vague").setup {
+  --       style = {
+  --         comments = "none",
+  --         strings = "none",
+  --       },
+  --       colors = {
+  --         hint = "#7894ab",
+  --       },
+  --     }
+  --
+  --     vim.cmd "colorscheme vague"
+  --
+  --     group_styles = {
+  --       ["StatusLine"] = { fg = "#646477", bg = "#222222" },
+  --       ["WinSeparator"] = { fg = "#444444" },
+  --       ["EndOfBuffer"] = { fg = "#444444" },
+  --     }
+  --
+  --     for group, style in pairs(group_styles) do
+  --       vim.api.nvim_set_hl(0, group, style)
+  --     end
+  --   end,
+  -- },
   -- {
   --   "rose-pine/neovim",
   --   -- {{{
@@ -38,7 +52,7 @@ return {
   --       styles = {
   --         bold = false,
   --         italic = false,
-  --         transparency = false,
+  --         transparency = true,
   --       },
   --     }
   --
@@ -49,6 +63,7 @@ return {
   {
     "echasnovski/mini.extra",
     -- {{{
+    version = false,
     config = function()
       require("mini.extra").setup()
     end,
@@ -57,6 +72,7 @@ return {
   {
     "echasnovski/mini.files",
     -- {{{
+    version = false,
     opts = {
       windows = {
         preview = false,
@@ -150,6 +166,7 @@ return {
   {
     "echasnovski/mini.diff",
     -- {{{
+    version = false,
     event = "VeryLazy",
     delay = {
       text_change = 100, -- default 200
@@ -169,6 +186,7 @@ return {
   {
     "echasnovski/mini.align",
     -- {{{
+    version = false,
     keys = {
       { "ga", mode = { "n", "v", "x" } },
       { "gA", mode = { "n", "v", "x" } },
@@ -181,6 +199,7 @@ return {
   {
     "echasnovski/mini.surround",
     -- {{{
+    version = false,
     keys = {
       { "sa", mode = { "n", "v", "x" } },
       { "sd", mode = { "n", "v", "x" } },
@@ -194,6 +213,7 @@ return {
   {
     "echasnovski/mini.comment",
     -- {{{
+    version = false,
     keys = {
       { "gc", mode = { "n", "v", "x" } },
     },
@@ -205,6 +225,7 @@ return {
   {
     "echasnovski/mini.pick",
     -- {{{
+    version = false,
     keys = {
       {
         "<leader><leader>",
@@ -457,8 +478,8 @@ return {
   {
     "echasnovski/mini.completion",
     -- {{{
-    event = "VeryLazy",
     version = false,
+    event = "VeryLazy",
     keys = {
       {
         "<tab>",
