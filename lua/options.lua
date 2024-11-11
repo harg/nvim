@@ -140,6 +140,7 @@ opt.foldmethod = "marker"
 
 -- Default with black and white colorscheme
 group_styles = {
+  ["Statement"] = { fg = "#FCE094", bold = false }, --NvimLightYellow
   ["Normal"] = { fg = "#C4C6CD", bg = "#1e1e1e" },
   ["Comment"] = { fg = "#77797B" },
   ["String"] = { fg = "#bbbdbf" },
