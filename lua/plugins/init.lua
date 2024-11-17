@@ -41,25 +41,25 @@ return {
   --     end
   --   end,
   -- },
-  -- {
-  --   "rose-pine/neovim",
-  --   -- {{{
-  --   name = "rose-pine",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("rose-pine").setup {
-  --       styles = {
-  --         bold = false,
-  --         italic = false,
-  --         transparency = true,
-  --       },
-  --     }
-  --
-  --     vim.cmd "colorscheme rose-pine-moon"
-  --   end,
-  --   -- }}}
-  -- },
+  {
+    "rose-pine/neovim",
+    -- {{{
+    name = "rose-pine",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("rose-pine").setup {
+        styles = {
+          bold = false,
+          italic = false,
+          transparency = false,
+        },
+      }
+
+      vim.cmd "colorscheme rose-pine-moon"
+    end,
+    -- }}}
+  },
   {
     "echasnovski/mini.extra",
     -- {{{
@@ -211,9 +211,18 @@ return {
     -- }}}
   },
   {
+    "folke/ts-comments.nvim",
+    -- {{{
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has "nvim-0.10.0" == 1,
+    -- }}}
+  },
+  {
     "echasnovski/mini.comment",
     -- {{{
     version = false,
+    event = "VeryLazy",
     keys = {
       { "gc", mode = { "n", "v", "x" } },
     },
@@ -329,7 +338,6 @@ return {
         "<leader>gg",
         function()
           if jit.os == "Windows" then
-            -- CMD /C npm run dev
             command = { "CMD", "/c", "git ls-files --others --exclude-standard & git diff --name-only" }
           else
             command = { "sh", "-c", "git ls-files --others --exclude-standard && git diff --name-only" }

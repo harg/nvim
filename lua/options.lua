@@ -138,98 +138,51 @@ opt.foldmethod = "marker"
 -- Dark 3 : #2C2E33
 -- Dark 4 : #4F5258
 
+-- Palette : https://user-images.githubusercontent.com/71196912/206824417-1020fb4f-e181-441f-be6f-a53ca18e8b26.png
+
 -- Default with black and white colorscheme
-group_styles = {
-  ["Statement"] = { fg = "#FCE094", bold = false }, --NvimLightYellow
-  ["Normal"] = { fg = "#C4C6CD", bg = "#1e1e1e" },
-  ["Comment"] = { fg = "#77797B" },
-  ["String"] = { fg = "#bbbdbf" },
-  ["Function"] = { fg = "#bbbdbf" },
-  ["Identifier"] = { fg = "#dddfe1", bold = false },
-  ["Special"] = { fg = "#BBBDBF" },
-  ["Question"] = { fg = "#66686A" },
-  ["Directory"] = { fg = "#77797B" },
-
-  ["MoreMsg"] = { fg = "#EEF1F8", bg = "#4F5258" },
-  ["QuickFixLine"] = { fg = "#EEF1F8", bg = "#4F5258" },
-  ["StatusLineNC"] = { fg = "#4F5258", bg = "#2C2E33" },
-  ["NormalFloat"] = { bg = "None" },
-
-  ["Folded"] = { fg = "#4F5258" },
-  ["MatchParen"] = { fg = "#ffffff", bold = true },
-  ["WinSeparator"] = { fg = "#4F5258" },
-
-  ["Search"] = { fg = "#07080d", bg = "#77797B" },
-  ["CurSearch"] = { fg = "#07080d", bg = "#AAACAF" },
-
-  ["DiagnosticUnnecessary"] = { fg = "#BBBDBF" },
-}
-
-for group, style in pairs(group_styles) do
-  vim.api.nvim_set_hl(0, group, style)
-end
-
----------------------------------------------------------------
-
--- clipboard loading
--- local is_wsl = vim.fn.has "wsl"
--- local is_windows = vim.fn.has "win32" or vim.fn.has "win64"
--- local is_mac = vim.fn.has "macunix"
--- local is_unix = vim.fn.has "unix"
-
--- vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
---   once = true,
---   callback = function()
---     if is_windows == 1 and not is_wsl == 1 then
---       print "Using Windows clipboard."
---       vim.g.clipboard = {
---         copy = {
---           ["+"] = "win32yank.exe -i --crlf",
---           ["*"] = "win32yank.exe -i --crlf",
---         },
---         paste = {
---           ["+"] = "win32yank.exe -o --lf",
---           ["*"] = "win32yank.exe -o --lf",
---         },
---       }
---     elseif is_mac == 1 then
---       vim.g.clipboard = {
---         copy = {
---           ["+"] = "pbcopy",
---           ["*"] = "pbcopy",
---         },
---         paste = {
---           ["+"] = "pbpaste",
---           ["*"] = "pbpaste",
---         },
---       }
---     elseif is_unix == 1 or is_wsl == 1 then
---       if vim.fn.executable "xclip" == 1 then
---         vim.g.clipboard = {
---           copy = {
---             ["+"] = "xclip -selection clipboard",
---             ["*"] = "xclip -selection clipboard",
---           },
---           paste = {
---             ["+"] = "xclip -selection clipboard -o",
---             ["*"] = "xclip -selection clipboard -o",
---           },
---         }
---       elseif vim.fn.executable "xsel" == 1 then
---         vim.g.clipboard = {
---           copy = {
---             ["+"] = "xsel --clipboard --input",
---             ["*"] = "xsel --clipboard --input",
---           },
---           paste = {
---             ["+"] = "xsel --clipboard --output",
---             ["*"] = "xsel --clipboard --output",
---           },
---         }
---       end
---     end
+-- group_styles = {
+--   -- ["Statement"] = { fg = "#FCE094", bold = false }, --NvimLightYellow
+--   ["Statement"] = { fg = "#BE95ff", bold = false }, --NvimLightYellow
 --
---     vim.opt.clipboard = "unnamedplus"
---   end,
---   desc = "Lazy load clipboard",
--- })
+--   ["@function"] = { fg = "#FCE094", bold = false }, -- Function definition
+--   ["@function.method"] = { fg = "#FCE094", bold = false }, -- Method definition
+--   ["@function.builtin"] = { fg = "#BBBDBF", bold = false },
+--   ["@function.call"] = { fg = "#BBBDBF", bold = false },
+--   ["@function.method.call"] = { fg = "#BBBDBF", bold = false },
+--   ["@function.macro"] = { fg = "#bbbdbf", bold = false },
+--
+--   ["@tag"] = { fg = "#ff7eb6", bold = false },
+--   ["@tag.builtin"] = { fg = "#ee5396", bold = false },
+--   ["@tag.attribute"] = { fg = "#BBBDBF", bold = false },
+--   ["@tag.delimiter"] = { fg = "#9B9EA4", bold = false },
+--
+--   ["Normal"] = { fg = "#C4C6CD", bg = "#1e1e1e" },
+--   ["Comment"] = { fg = "#77797B" },
+--   -- ["String"] = { fg = "#bbbdbf" },
+--   ["String"] = { fg = "#08bdba" },
+--   ["Function"] = { fg = "#bbbdbf" },
+--   ["Identifier"] = { fg = "#dddfe1", bold = false },
+--   -- ["Special"] = { fg = "#BBBDBF" },
+--   ["Special"] = { fg = "#C4C6CD" },
+--   ["Question"] = { fg = "#66686A" },
+--   ["Directory"] = { fg = "#77797B" },
+--
+--   ["MoreMsg"] = { fg = "#EEF1F8", bg = "#4F5258" },
+--   ["QuickFixLine"] = { fg = "#EEF1F8", bg = "#4F5258" },
+--   ["StatusLineNC"] = { fg = "#4F5258", bg = "#2C2E33" },
+--   ["NormalFloat"] = { bg = "None" },
+--
+--   ["Folded"] = { fg = "#4F5258" },
+--   ["MatchParen"] = { fg = "#ffffff", bold = false },
+--   ["WinSeparator"] = { fg = "#4F5258" },
+--
+--   ["Search"] = { fg = "#07080d", bg = "#77797B" },
+--   ["CurSearch"] = { fg = "#07080d", bg = "#AAACAF" },
+--
+--   ["DiagnosticUnnecessary"] = { fg = "#BBBDBF" },
+-- }
+--
+-- for group, style in pairs(group_styles) do
+--   vim.api.nvim_set_hl(0, group, style)
+-- end

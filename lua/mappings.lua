@@ -39,6 +39,14 @@ map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
 map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>]], { noremap = true, silent = true })
 
+-- Highlights
+map(
+  "n",
+  "<F10>",
+  [[:lua print(vim.inspect(vim.treesitter.get_captures_at_cursor(0)))<CR>]],
+  { noremap = true, silent = true }
+)
+
 -- Spell
 map("n", "<leader>sp", "<cmd>set spell!<CR>", { desc = "Toogle spell" })
 map("n", ")s", "]s", { desc = "Next misspelled word" })
