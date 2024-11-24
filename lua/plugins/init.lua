@@ -591,12 +591,40 @@ return {
     "nanozuki/tabby.nvim",
     event = "VeryLazy",
     config = function()
+      -- require("tabby").setup {
+      --   preset = "active_wins_at_tail",
+      --   option = {
+      --     nerdfont = false,
+      --     -- lualine_theme = 'rose-pine',
+      --   },
+      -- }
+      local theme = {
+        -- fill = "TabLineFill",
+        fill = { fg = "#2a273f", bg = "#1f1c2c" },
+        head = "TabLine",
+        current_tab = "TabLineSel",
+        tab = "TabLine",
+        win = "TabLine",
+        tail = "TabLine",
+      }
       require("tabby").setup {
-        preset = "active_wins_at_tail",
-        option = {
-          nerdfont = false,
-          -- lualine_theme = 'rose-pine',
-        },
+        line = function(line)
+          return {
+            line.tabs().foreach(function(tab)
+              local hl = tab.is_current() and theme.current_tab or theme.tab
+              return {
+                line.sep("", hl, theme.fill),
+                tab.name(),
+                tab.close_btn "🗙",
+                line.sep("", hl, theme.fill),
+                hl = hl,
+                margin = "  ",
+              }
+            end),
+            hl = theme.fill,
+          }
+        end,
+        -- option = {}, -- setup modules' option,
       }
     end,
   },
