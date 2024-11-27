@@ -1,5 +1,6 @@
 {
   "conform.nvim": { "branch": "master", "commit": "62d5accad8b29d6ba9b58d3dff90c43a55621c60" },
+  "kanagawa-paper.nvim": { "branch": "master", "commit": "2856b250977c3c7a30f10019a82328f660a7f730" },
   "lazy.nvim": { "branch": "main", "commit": "56ead98e05bb37a4ec28930a54d836d033cf00f2" },
   "mini.align": { "branch": "main", "commit": "26111a737494bc39576ad67b52bbc2638ca23553" },
   "mini.comment": { "branch": "main", "commit": "a56581c40c19fa26f2b39da72504398de3173c5a" },
@@ -7,11 +8,11 @@
   "mini.diff": { "branch": "main", "commit": "65c59f9967fec965d8759a88c1baa43147699035" },
   "mini.extra": { "branch": "main", "commit": "098a9dc55b2bdf05a7d6ed018884e0faf94edcbb" },
   "mini.files": { "branch": "main", "commit": "6abe854f1410fc6aec69897a78b1db994c32d9c6" },
+  "mini.icons": { "branch": "main", "commit": "54686be7d58807906cb2c8c2216e0bf9c044f19a" },
   "mini.pick": { "branch": "main", "commit": "141496412ccd8a6d01bdafc126ea307687600cad" },
   "mini.surround": { "branch": "main", "commit": "48a9795c9d352c771e1ab5dedab6063c0a2df037" },
   "nvim-lspconfig": { "branch": "master", "commit": "dafd61d6533bd90ecf6e2a3a972298fdddc74d82" },
   "nvim-treesitter": { "branch": "master", "commit": "7930b5f983c37bb07c9af27274334a7adcb3e5af" },
-  "rose-pine": { "branch": "main", "commit": "07a887a7bef4aacea8c7caebaf8cbf808cdc7a8e" },
   "tabby.nvim": { "branch": "main", "commit": "41669e37ab79ab2dce90c4352dacbbc26e938dd7" },
   "ts-comments.nvim": { "branch": "main", "commit": "2002692ad1d3f6518d016550c20c2a890f0cbf0e" }
 }

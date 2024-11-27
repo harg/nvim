@@ -41,24 +41,63 @@ return {
   --     end
   --   end,
   -- },
+  -- {
+  --   "rose-pine/neovim",
+  --   -- {{{
+  --   name = "rose-pine",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("rose-pine").setup {
+  --       styles = {
+  --         bold = false,
+  --         italic = false,
+  --         transparency = false,
+  --       },
+  --     }
+  --
+  --     vim.cmd "colorscheme rose-pine-moon"
+  --   end,
+  --   -- }}}
+  -- },
   {
-    "rose-pine/neovim",
-    -- {{{
-    name = "rose-pine",
+    "sho-87/kanagawa-paper.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      require("rose-pine").setup {
-        styles = {
-          bold = false,
-          italic = false,
-          transparency = false,
-        },
+      require("kanagawa-paper").setup {
+        undercurl = false,
+        transparent = false,
+        gutter = false,
+        dimInactive = false, -- disabled when transparent
+        terminalColors = true,
+        commentStyle = { italic = false },
+        functionStyle = { italic = false },
+        keywordStyle = { italic = false, bold = false },
+        statementStyle = { italic = false, bold = false },
+        typeStyle = { italic = false },
+        -- colors = { theme = {}, palette = {} }, -- override default palette and theme colors
+        -- overrides = function() -- override highlight groups
+        --   return {}
+        -- end,
       }
 
-      vim.cmd "colorscheme rose-pine-moon"
+      -- setup must be called before loading
+      vim.cmd "colorscheme kanagawa-paper"
     end,
-    -- }}}
+  },
+  {
+    "echasnovski/mini.icons",
+    opts = {},
+    specs = {
+      { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+    },
+    init = function()
+      package.preload["nvim-web-devicons"] = function()
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    end,
   },
   {
     "echasnovski/mini.extra",
@@ -79,7 +118,7 @@ return {
         width_focus = 30,
         width_preview = 30,
       },
-      content = { prefix = function() end },
+      content = { prefix = function() end }, -- hide icons
       mappings = {
         close = "<leader>e",
         go_in = "l",
@@ -587,47 +626,47 @@ return {
     end,
     -- }}}
   },
-  {
-    "nanozuki/tabby.nvim",
-    event = "VeryLazy",
-    config = function()
-      -- require("tabby").setup {
-      --   preset = "active_wins_at_tail",
-      --   option = {
-      --     nerdfont = false,
-      --     -- lualine_theme = 'rose-pine',
-      --   },
-      -- }
-      local theme = {
-        -- fill = "TabLineFill",
-        fill = { fg = "#2a273f", bg = "#1f1c2c" },
-        head = "TabLine",
-        current_tab = "TabLineSel",
-        tab = "TabLine",
-        win = "TabLine",
-        tail = "TabLine",
-      }
-      require("tabby").setup {
-        line = function(line)
-          return {
-            line.tabs().foreach(function(tab)
-              local hl = tab.is_current() and theme.current_tab or theme.tab
-              return {
-                line.sep("", hl, theme.fill),
-                tab.name(),
-                tab.close_btn "🗙",
-                line.sep("", hl, theme.fill),
-                hl = hl,
-                margin = "  ",
-              }
-            end),
-            hl = theme.fill,
-          }
-        end,
-        -- option = {}, -- setup modules' option,
-      }
-    end,
-  },
+  -- {
+  --   "nanozuki/tabby.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     -- require("tabby").setup {
+  --     --   preset = "active_wins_at_tail",
+  --     --   option = {
+  --     --     nerdfont = false,
+  --     --     -- lualine_theme = 'rose-pine',
+  --     --   },
+  --     -- }
+  --     local theme = {
+  --       fill = "TabLineFill",
+  --       -- fill = { fg = "#2a273f", bg = "#1f1c2c" }, --rosepine
+  --       head = "TabLine",
+  --       current_tab = "TabLineSel",
+  --       tab = "TabLine",
+  --       win = "TabLine",
+  --       tail = "TabLine",
+  --     }
+  --     require("tabby").setup {
+  --       line = function(line)
+  --         return {
+  --           line.tabs().foreach(function(tab)
+  --             local hl = tab.is_current() and theme.current_tab or theme.tab
+  --             return {
+  --               line.sep("", hl, theme.fill),
+  --               tab.name(),
+  --               tab.close_btn "🗙",
+  --               line.sep("", hl, theme.fill),
+  --               hl = hl,
+  --               margin = "  ",
+  --             }
+  --           end),
+  --           hl = theme.fill,
+  --         }
+  --       end,
+  --       -- option = {}, -- setup modules' option,
+  --     }
+  --   end,
+  -- },
   {
     "stevearc/conform.nvim",
     -- {{{
