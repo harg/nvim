@@ -76,7 +76,17 @@ return {
         keywordStyle = { italic = false, bold = false },
         statementStyle = { italic = false, bold = false },
         typeStyle = { italic = false },
-        -- colors = { theme = {}, palette = {} }, -- override default palette and theme colors
+        colors = {
+          theme = {},
+          palette = {
+            -- samuraiRed = "#e82424",
+            -- roninYellow = "#ff9e3b",
+            --
+            samuraiRed = "#e07b75",
+            lotusRed3 = "#e07b75",
+            roninYellow = "#f1a050",
+          },
+        }, -- override default palette and theme colors
         -- overrides = function() -- override highlight groups
         --   return {}
         -- end,
@@ -98,6 +108,38 @@ return {
         return package.loaded["nvim-web-devicons"]
       end
     end,
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    -- stylua: ignore
+    opts = {
+      animate      = { enabled = false },
+      bigfile      = { enabled = true },
+      bufdelete    = { enabled = true },
+      dashboard    = { enabled = false },
+      debug        = { enabled = true },
+      dim          = { enabled = false },
+      git          = { enabled = true },
+      gitbrowse    = { enabled = true },
+      indent       = { enabled = false },
+      input        = { enabled = true },
+      lazygit      = { enabled = true },
+      notifier     = { enabled = false },
+      notify       = { enabled = false },
+      profiler     = { enabled = true },
+      quickfile    = { enabled = true },
+      rename       = { enabled = true },
+      scope        = { enabled = true },
+      scratch      = { enabled = true },
+      scroll       = { enabled = false },
+      statuscolumn = { enabled = false },
+      terminal     = { enabled = true },
+      toggle       = { enabled = false },
+      words        = { enabled = false },
+      zen          = { enabled = false },
+    },
   },
   {
     "echasnovski/mini.extra",
