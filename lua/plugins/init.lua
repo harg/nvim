@@ -324,13 +324,15 @@ return {
         end,
         desc = "Open mini.pick (Files)",
       },
-      {
-        "<leader>/",
-        function()
-          require("mini.pick").builtin.grep()
-        end,
-        desc = "Open mini.pick (Grep)",
-      },
+      "<leader>/",
+      --   Replaced by multi-grep.lua
+      --   {
+      --   "<leader>/",
+      --   function()
+      --     require("mini.pick").builtin.grep()
+      --   end,
+      --   desc = "Open mini.pick (Grep)",
+      -- },
       {
         "<F12>",
         function()
@@ -488,6 +490,7 @@ return {
       },
     },
     config = function()
+      require("multi-grep").setup()
       local pick = require "mini.pick"
       pick.setup {
         source = {
