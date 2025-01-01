@@ -592,6 +592,10 @@ return {
           info = { border = "single" },
           signature = { border = "single" },
         },
+        lsp_completion = {
+          source_func = "completefunc",
+          auto_setup = true,
+        },
       }
     end,
     -- }}}
@@ -747,5 +751,29 @@ return {
       },
     },
     -- }}}
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- vim.g.db_ui_use_nerd_fonts = 1
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = { "sql", "mysql", "plsql" },
+        callback = function()
+          vim.bo.omnifunc = "vim_dadbod_completion#omni"
+          vim.b.minicompletion_config = { fallback_action = "<C-x><C-o>" }
+          vim.opt.cmdheight = 2 -- remove "hit enter messages" by increasing command line height
+        end,
+      })
+    end,
   },
 }
