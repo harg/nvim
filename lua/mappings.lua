@@ -29,15 +29,17 @@ map("n", "<leader>s<Down>", ":resize -5<CR>", { silent = true })
 map("n", "<leader>s<Left>", ":vertical resize -5<CR>", { silent = true })
 map("n", "<leader>s<Right>", ":vertical resize +5<CR>", { silent = true })
 
-map("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
-map("n", "<leader>tl", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
-map("n", "<leader>th", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
-map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+map("n", "<leader>tn", "<cmd>tabnew<CR>", { desc = "Open new tab" })
+map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
+map("n", "<leader>t<Right>", "<cmd>tabn<CR>", { desc = "Go to next tab" })
+map("n", "<leader>t<Left>", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
+map("n", "<leader>t<Up>", "<cmd>tabfirst<CR>", { desc = "Go to first tab" })
+map("n", "<leader>t<Down>", "<cmd>tablast<CR>", { desc = "Go to last tab" })
+map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 
 -- Terminal
 map("t", "<ESC><ESC>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
-map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>]], { noremap = true, silent = true })
+map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>a]], { noremap = true, silent = true })
 
 -- Highlights
 map(

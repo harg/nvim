@@ -87,9 +87,11 @@ return {
             roninYellow = "#f1a050",
           },
         }, -- override default palette and theme colors
-        -- overrides = function() -- override highlight groups
-        --   return {}
-        -- end,
+        overrides = function() -- override highlight groups
+          return {
+            ["@variable.builtin"] = {fg="#c4746e", italic = false}
+          }
+        end,
       }
 
       -- setup must be called before loading

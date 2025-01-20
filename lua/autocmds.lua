@@ -1,13 +1,33 @@
--- Disable Linenumbers in Terminals
+-- disable Linenumbers in Terminals
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
-  command = "setlocal nonumber",
-})
-
--- Automatically close terminal Buffers when their Process is done
-vim.api.nvim_create_autocmd("TermClose", {
   callback = function()
-    vim.cmd "bdelete"
+    vim.cmd "setlocal nonumber"
+    vim.cmd "setlocal statusline=Terminal"
+  end,
+})
+-- set insert mode when focusing on terminal window
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = "term://*",
+  callback = function()
+    vim.cmd "startinsert"
+  end,
+})
+-- show cursor line only in active window
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+  callback = function()
+    if vim.w.auto_cursorline then
+      vim.wo.cursorline = true
+      vim.w.auto_cursorline = nil
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+  callback = function()
+    if vim.wo.cursorline then
+      vim.w.auto_cursorline = true
+      vim.wo.cursorline = false
+    end
   end,
 })
 
