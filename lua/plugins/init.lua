@@ -670,7 +670,7 @@ return {
       }
 
       -- local lspservers =  {"ts_ls", "html", "cssls", "tailwindcss", "emmet_ls", "gopls", "denols"}
-      local lspservers = { "ts_ls", "gopls" }
+      local lspservers = { "vtsls", "gopls" }
       for i, v in ipairs(lspservers) do
         lspconfig[v].setup {}
       end
