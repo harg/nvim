@@ -89,7 +89,8 @@ return {
         }, -- override default palette and theme colors
         overrides = function() -- override highlight groups
           return {
-            ["@variable.builtin"] = {fg="#c4746e", italic = false}
+            ["@variable.builtin"] = { fg = "#c4746e", italic = false },
+            -- CursorLine = { bg = "#16161d" },
           }
         end,
       }
