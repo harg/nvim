@@ -29,6 +29,7 @@ opt.autoindent = true -- copy indent from current line when starting new one
 
 opt.wrap = false -- no wrap by default
 opt.linebreak = true -- wraps text at the end of a word
+opt.scrolloff = 4
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching
@@ -46,6 +47,9 @@ opt.signcolumn = "yes" -- show sign column so that text doesn't shift
 
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+
+opt.complete = "."
+g.omni_sql_default_compl_type = "syntax" -- disable dynamic sql completion
 
 -- clipboard
 -- opt.clipboard:append("unnamedplus") -- use system clipboard as default register
@@ -121,8 +125,8 @@ end
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
--- turn off swapfile
-opt.swapfile = false
+-- o.shada = "'100,<50,0,:1000,/100,@100,h" -- limit shada file to 100 entries
+opt.swapfile = false -- turn off swapfile
 
 -- use forld markers
 opt.foldmethod = "marker"

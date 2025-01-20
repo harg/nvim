@@ -498,7 +498,8 @@ return {
           show = pick.default_show, --disable icons
         },
         mappings = {
-          choose_in_split = "<A-s>",
+          choose_in_tabpage = "<C-t>",
+          choose_in_split = "<C-h>",
           choose_in_vsplit = "<C-s>",
           caret_right = "", -- hacky : disable move carret to right and emulate pressing <CR> with <Right>
           my_choose = {
