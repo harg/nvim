@@ -128,7 +128,14 @@ return {
       gitbrowse    = { enabled = true },
       indent       = { enabled = false },
       input        = { enabled = true },
-      lazygit      = { enabled = true },
+      lazygit      = { 
+        enabled = true,
+        config = {
+          gui = {
+            nerdFontsVersion = "",
+          }
+        }
+      },
       notifier     = { enabled = false },
       notify       = { enabled = false },
       profiler     = { enabled = true },
@@ -142,6 +149,52 @@ return {
       toggle       = { enabled = false },
       words        = { enabled = false },
       zen          = { enabled = false },
+    },
+    keys = {
+      {
+        "<leader>lg",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Lazygit",
+      },
+      {
+        "<leader>bd",
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = "Delete Buffer",
+      },
+      {
+        "<F1>",
+        function()
+          Snacks.terminal.toggle(nil, { interactive = true, win = { position = "left" }, env = { nvterm = "1" } })
+        end,
+        desc = "Open terminal (left)",
+        mode = { "n", "t" },
+      },
+      {
+        "<F2>",
+        function()
+          Snacks.terminal.toggle(
+            nil,
+            { interactive = true, win = { position = "right" }, cwd = vim.fn.getcwd(), env = { nvterm = "2" } }
+          )
+        end,
+        desc = "Open terminal (right)",
+        mode = { "n", "t" },
+      },
+      {
+        "<F3>",
+        function()
+          Snacks.terminal.toggle(
+            nil,
+            { interactive = true, win = { position = "float" }, cwd = vim.fn.getcwd(), env = { nvterm = "3" } }
+          )
+        end,
+        desc = "Open terminal (float)",
+        mode = { "n", "t" },
+      },
     },
   },
   {
@@ -345,7 +398,7 @@ return {
         desc = "Open mini.pick (Files)",
       },
       {
-        "<leader>b",
+        "<leader>bb",
         function()
           require("mini.pick").builtin.buffers()
         end,

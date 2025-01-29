@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   end,
 })
 -- show cursor line only in active window
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter" }, {
   callback = function()
     if vim.w.auto_cursorline then
       vim.wo.cursorline = true
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
     end
   end,
 })
-vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+vim.api.nvim_create_autocmd({ "InsertEnter", "BufLeave" }, {
   callback = function()
     if vim.wo.cursorline then
       vim.w.auto_cursorline = true
