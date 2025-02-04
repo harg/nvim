@@ -138,6 +138,15 @@ return {
       },
       notifier     = { enabled = false },
       notify       = { enabled = false },
+      picker       = { 
+        layout = {
+          preview = false
+        },
+        enabled = true, 
+        icons = { 
+          files = { enabled = false } 
+        } 
+      },
       profiler     = { enabled = true },
       quickfile    = { enabled = true },
       rename       = { enabled = true },
@@ -168,20 +177,45 @@ return {
       {
         "<F1>",
         function()
-          Snacks.terminal.toggle(nil, { interactive = true, win = { position = "left" }, env = { nvterm = "1" } })
+          Snacks.terminal.toggle(nil, {
+            interactive = true,
+            win = {
+              width = 0.49,
+              height = 0.95,
+              row = 0,
+              col = 0,
+              relative = "editor",
+              position = "float",
+              style = "minimal",
+              border = "single",
+            },
+            cwd = vim.fn.getcwd(),
+            env = { nvterm = "1" },
+          })
         end,
-        desc = "Open terminal (left)",
+        desc = "Open terminal #1",
         mode = { "n", "t" },
       },
       {
         "<F2>",
         function()
-          Snacks.terminal.toggle(
-            nil,
-            { interactive = true, win = { position = "right" }, cwd = vim.fn.getcwd(), env = { nvterm = "2" } }
-          )
+          Snacks.terminal.toggle(nil, {
+            interactive = true,
+            win = {
+              width = 0.49,
+              height = 0.95,
+              row = 0,
+              col = 0.51,
+              relative = "editor",
+              position = "float",
+              style = "minimal",
+              border = "single",
+            },
+            cwd = vim.fn.getcwd(),
+            env = { nvterm = "2" },
+          })
         end,
-        desc = "Open terminal (right)",
+        desc = "Open terminal #2",
         mode = { "n", "t" },
       },
       {
@@ -189,10 +223,15 @@ return {
         function()
           Snacks.terminal.toggle(
             nil,
-            { interactive = true, win = { position = "float" }, cwd = vim.fn.getcwd(), env = { nvterm = "3" } }
+            {
+              interactive = true,
+              win = { position = "float", border = "double" },
+              cwd = vim.fn.getcwd(),
+              env = { nvterm = "3" },
+            }
           )
         end,
-        desc = "Open terminal (float)",
+        desc = "Open terminal #3",
         mode = { "n", "t" },
       },
     },
