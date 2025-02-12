@@ -116,6 +116,7 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    event = "VeryLazy",
     -- stylua: ignore
     opts = {
       animate      = { enabled = false },
@@ -221,15 +222,12 @@ return {
       {
         "<F3>",
         function()
-          Snacks.terminal.toggle(
-            nil,
-            {
-              interactive = true,
-              win = { position = "float", border = "double" },
-              cwd = vim.fn.getcwd(),
-              env = { nvterm = "3" },
-            }
-          )
+          Snacks.terminal.toggle(nil, {
+            interactive = true,
+            win = { position = "float", border = "double" },
+            cwd = vim.fn.getcwd(),
+            env = { nvterm = "3" },
+          })
         end,
         desc = "Open terminal #3",
         mode = { "n", "t" },
