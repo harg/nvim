@@ -1,8 +1,50 @@
--- ttps://github.com/pkazmier/nvim
+-- clipboard
+-- opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+-- load clipboard extension first
+
+if jit.os == "Windows" then
+  require "nvrplug" -- Useful? Require the library at startup to prevent a small delay during the first invocation
+  vim.g.clipboard = {
+    name = "c0r",
+    copy = {
+      ["+"] = function(lines, regtype)
+        local content = table.concat(lines, "\r\n")
+        require("nvrplug").yank(content)
+      end,
+      ["*"] = function(lines, regtype)
+        local content = table.concat(lines, "\r\n")
+        require("nvrplug").yank(content)
+      end,
+    },
+    paste = {
+      ["+"] = function()
+        local content = require("nvrplug").paste()
+        content = content:gsub("\r\n", "\n")
+        return { vim.split(content, "\n"), "v" }
+      end,
+      ["*"] = function()
+        local content = require("nvrplug").paste()
+        content = content:gsub("\r\n", "\n")
+        return { vim.split(content, "\n"), "v" }
+      end,
+    },
+    cache_enabled = 0,
+  }
+end
+
+-- vim.g.clipboard = {
+--       name = 'OSC 52',
+--       copy = {
+--         ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+--         ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+--       },
+--       paste = {
+--         ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+--         ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+--       },
+-- }
 
 vim.g.mapleader = " "
-
-vim.api.nvim_set_hl(0, "Normal", { fg = "#e0def4", bg = "#232136" })
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -12,6 +54,9 @@ if not vim.uv.fs_stat(lazypath) then
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- Load ExColors generated colorscheme
+vim.cmd "colorscheme ex-kanagawa-paper"
 
 require("lazy").setup({ { import = "plugins" } }, {
   defaults = { lazy = true },

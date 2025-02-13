@@ -1,19 +1,5 @@
 return {
   -- {
-  --   "zenbones-theme/zenbones.nvim",
-  --   -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-  --   -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-  --   -- In Vim, compat mode is turned on as Lush only works in Neovim.
-  --   dependencies = "rktjmp/lush.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   -- you can set set configuration options here
-  --   config = function()
-  --     vim.g.zenbones_darken_comments = 45
-  --     vim.cmd.colorscheme "zenwritten"
-  --   end,
-  -- },
-  -- {
   --   "vague2k/vague.nvim",
   --   lazy = false,
   --   priority = 1000,
@@ -62,7 +48,11 @@ return {
   -- },
   {
     "sho-87/kanagawa-paper.nvim",
-    lazy = false,
+    -- {{{
+    -- Generate optimized colorscheme
+    -- > Lazy Load kanagawa-paper.nvim
+    -- > ExColors and save. Load the generated colorscheme in init.lua
+    lazy = true, -- don't load by default, only on demand for generating optimized colorscheme
     priority = 1000,
     config = function()
       require("kanagawa-paper").setup {
@@ -90,7 +80,6 @@ return {
         overrides = function() -- override highlight groups
           return {
             ["@variable.builtin"] = { fg = "#c4746e", italic = false },
-            -- CursorLine = { bg = "#16161d" },
           }
         end,
       }
@@ -98,6 +87,7 @@ return {
       -- setup must be called before loading
       vim.cmd "colorscheme kanagawa-paper"
     end,
+    -- }}}
   },
   {
     "echasnovski/mini.icons",
@@ -236,7 +226,6 @@ return {
   },
   {
     "echasnovski/mini.extra",
-
     -- {{{
     version = false,
     config = function()
@@ -870,5 +859,10 @@ return {
         end,
       })
     end,
+  },
+  {
+    "aileot/ex-colors.nvim",
+    cmd = { "ExColors" },
+    opts = {},
   },
 }
