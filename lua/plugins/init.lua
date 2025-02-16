@@ -52,7 +52,7 @@ return {
     -- Generate optimized colorscheme
     -- > Lazy Load kanagawa-paper.nvim
     -- > ExColors and save. Load the generated colorscheme in init.lua
-    lazy = true, -- don't load by default, only on demand for generating optimized colorscheme
+    lazy = "true", -- don't load by default, only on demand for generating optimized colorscheme
     priority = 1000,
     config = function()
       require("kanagawa-paper").setup {

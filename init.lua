@@ -3,7 +3,7 @@
 -- load clipboard extension first
 
 if jit.os == "Windows" then
-  require "nvrplug" -- Useful? Require the library at startup to prevent a small delay during the first invocation
+  -- local _ = require("nvrplug").paste() -- Useful? Require the library at startup to prevent a small delay during the first invocation
   vim.g.clipboard = {
     name = "c0r",
     copy = {
