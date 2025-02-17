@@ -130,10 +130,11 @@ return {
       notifier     = { enabled = false },
       notify       = { enabled = false },
       picker       = { 
-        layout = {
-          preview = false
-        },
         enabled = true, 
+        layout = {
+          preset = "select",
+          preview = false,
+        },
         icons = { 
           files = { enabled = false } 
         } 
@@ -151,6 +152,13 @@ return {
       zen          = { enabled = false },
     },
     keys = {
+      {
+        "<leader>x",
+        function()
+          Snacks.picker.pickers()
+        end,
+        desc = "All Snacks Pickers",
+      },
       {
         "<leader>lg",
         function()
