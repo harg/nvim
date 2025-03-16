@@ -166,9 +166,122 @@ return {
       {
         "<leader><leader>",
         function()
-          Snacks.picker.files()
+          Snacks.picker.smart()
         end,
         desc = "[Picker] Files",
+      },
+      {
+        "<leader>p",
+        function()
+          Snacks.picker.projects()
+        end,
+        desc = "[Picker] Projects",
+      },
+      {
+        "<leader>bb",
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = "[Picker] Buffers",
+      },
+      {
+        "<F12>",
+        function()
+          Snacks.picker.files { dirs = { vim.fn.stdpath "config" }, title = "Nvim Config Files" }
+        end,
+        desc = "[Picker] Nvim Config Files",
+      },
+      {
+        "<leader>E",
+        function()
+          Snacks.explorer()
+        end,
+        desc = "File Explorer",
+      },
+      {
+        "<leader>/",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Grep",
+      },
+      {
+        "gd",
+        function()
+          Snacks.picker.lsp_definitions()
+        end,
+        desc = "[Picker] Goto Definition",
+      },
+      {
+        "gD",
+        function()
+          Snacks.picker.lsp_declarations()
+        end,
+        desc = "[Picker] Goto Declaration",
+      },
+      {
+        "gr",
+        function()
+          Snacks.picker.lsp_references()
+        end,
+        nowait = true,
+        desc = "[Picker] References",
+      },
+      {
+        "gI",
+        function()
+          Snacks.picker.lsp_implementations()
+        end,
+        desc = "[Picker] Goto Implementation",
+      },
+      {
+        "gy",
+        function()
+          Snacks.picker.lsp_type_definitions()
+        end,
+        desc = "[Picker] Goto T[y]pe Definition",
+      },
+      {
+        "<leader>ls",
+        function()
+          Snacks.picker.lsp_symbols()
+        end,
+        desc = "[Picker] LSP Symbols",
+      },
+      {
+        "<leader>lS",
+        function()
+          Snacks.picker.lsp_workspace_symbols()
+        end,
+        desc = "[Picker] LSP Workspace Symbols",
+      },
+      {
+        "<leader>ld",
+        function()
+          Snacks.picker.diagnostics()
+        end,
+        desc = "[Picker] Diagnostics",
+      },
+      {
+        "<leader>lD",
+        function()
+          Snacks.picker.diagnostics_buffer()
+        end,
+        desc = "[Picker] Buffer Diagnostics",
+      },
+      {
+        "<leader>gb",
+        function()
+          Snacks.picker.git_branches()
+        end,
+        desc = "[Picker] Git Branches",
+      },
+      {
+        "<leader>gg",
+        function()
+          Snacks.picker.git_status()
+        end,
+        desc = "[Picker] Git Status",
       },
       {
         "<leader>lg",
@@ -243,15 +356,15 @@ return {
       },
     },
   },
-  {
-    "echasnovski/mini.extra",
-    -- {{{
-    version = false,
-    config = function()
-      require("mini.extra").setup()
-    end,
-    -- }}}
-  },
+  -- {
+  --   "echasnovski/mini.extra",
+  --   -- {{{
+  --   version = false,
+  --   config = function()
+  --     require("mini.extra").setup()
+  --   end,
+  --   -- }}}
+  -- },
   {
     "echasnovski/mini.files",
     -- {{{
@@ -411,209 +524,6 @@ return {
     },
     config = function()
       require("mini.comment").setup()
-    end,
-    -- }}}
-  },
-  {
-    "echasnovski/mini.pick",
-    -- {{{
-    version = false,
-    keys = {
-      -- {
-      --   "<leader><leader>",
-      --   function()
-      --     require("mini.pick").builtin.files()
-      --   end,
-      --   desc = "Open mini.pick (Files)",
-      -- },
-      -- "<leader>/",
-      --   Replaced by multi-grep.lua
-      --   {
-      --   "<leader>/",
-      --   function()
-      --     require("mini.pick").builtin.grep()
-      --   end,
-      --   desc = "Open mini.pick (Grep)",
-      -- },
-      {
-        "<F12>",
-        function()
-          require("mini.pick").builtin.files(nil, { source = { cwd = vim.fn.stdpath "config" } })
-        end,
-        desc = "Open mini.pick (Files)",
-      },
-      {
-        "<leader>bb",
-        function()
-          require("mini.pick").builtin.buffers()
-        end,
-        desc = "Open mini.pick (Buffers)",
-      },
-      {
-        "gr",
-        function()
-          require("mini.extra").pickers.lsp { scope = "references" }
-        end,
-        desc = "Open mini.pick (LSP References)",
-      },
-      {
-        "gD",
-        function()
-          require("mini.extra").pickers.lsp { scope = "declaration" }
-        end,
-        desc = "Open mini.pick (LSP Declaration)",
-      },
-      {
-        "gd",
-        function()
-          require("mini.extra").pickers.lsp { scope = "definition" }
-        end,
-        desc = "Open mini.pick (LSP Definition)",
-      },
-      {
-        "gi",
-        function()
-          require("mini.extra").pickers.lsp { scope = "implementation" }
-        end,
-        desc = "Open mini.pick (LSP Implementation)",
-      },
-      {
-        "gy",
-        function()
-          require("mini.extra").pickers.lsp { scope = "type_definition" }
-        end,
-        desc = "Open mini.pick (LSP Type Definition)",
-      },
-      {
-        "<leader>d",
-        function()
-          require("mini.extra").pickers.diagnostic { scope = "current" }
-        end,
-        desc = "Open mini.pick (LSP Diagnostics)",
-      },
-      {
-        "<leader>D",
-        function()
-          require("mini.extra").pickers.diagnostic { scope = "all" }
-        end,
-        desc = "Open mini.pick (LSP Workspace Diagnostics)",
-      },
-      {
-        "<leader>s",
-        function()
-          require("mini.extra").pickers.lsp { scope = "document_symbol" }
-        end,
-        desc = "Open mini.pick (LSP Symbols)",
-      },
-      {
-        "<leader>S",
-        function()
-          require("mini.extra").pickers.lsp { scope = "workspace_symbol" }
-        end,
-        desc = "Open mini.pick (LSP Workspace Symbols)",
-      },
-      {
-        "<leader>?",
-        function()
-          require("mini.extra").pickers.commands()
-        end,
-        desc = "Open mini.pick (Neovim commands)",
-      },
-      {
-        "<leader>gg",
-        function()
-          if jit.os == "Windows" then
-            command = { "CMD", "/c", "git ls-files --others --exclude-standard & git diff --name-only" }
-          else
-            command = { "sh", "-c", "git ls-files --others --exclude-standard && git diff --name-only" }
-          end
-          require("mini.pick").builtin.cli({ command = command }, { source = { name = "Git added & modified" } })
-        end,
-        desc = "Open mini.pick (Buffers)",
-      },
-      {
-        "<leader>gb",
-        mode = { "n" },
-        function()
-          require("mini.extra").pickers.git_branches({ scope = "local" }, {
-            source = {
-              name = "Git Branches",
-              choose = function(item)
-                local branch = item:match "%s+(%S+)%s+"
-                local on_exit = function(obj)
-                  if obj.code == 0 then
-                    print("Switch to branch '" .. branch .. "'")
-                  else
-                    print(vim.inspect(obj))
-                    print("Failed to switch branch '" .. branch .. "'")
-                  end
-                end
-                vim.system({ "git", "switch", branch }, { text = false }, on_exit)
-              end,
-            },
-          })
-        end,
-        desc = "Open mini.pick (Git Branches)",
-      },
-      {
-        "<leader>$",
-        function()
-          local preview_func = function(buf_id, item)
-            -- local lines = vim.split(vim.inspect(item), "\n")
-            local lines = { "Name : " .. item }
-            vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
-          end
-
-          local show_func = function(buf_id, items_arr, query)
-            -- local lines = vim.tbl_map(function(x)
-            --   return "Gay " .. x
-            -- end, items_arr)
-            -- vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
-            local prefix = "Gay "
-
-            for i, str in ipairs(items_arr) do
-              items_arr[i] = prefix .. str
-            end
-            MiniPick.default_show(buf_id, items_arr, query)
-          end
-
-          MiniPick.start {
-            source = {
-              items = { "Harold", "Alix", "Eugénie", "Gustave" },
-              preview = preview_func,
-              show = show_func,
-              choose = function(item)
-                print("Hello " .. item)
-              end,
-            },
-          }
-        end,
-        desc = "Open mini.pick (Example)",
-      },
-    },
-    config = function()
-      require("multi-grep").setup()
-      local pick = require "mini.pick"
-      pick.setup {
-        source = {
-          show = pick.default_show, --disable icons
-        },
-        mappings = {
-          choose_in_tabpage = "<C-t>",
-          choose_in_split = "<C-h>",
-          choose_in_vsplit = "<C-s>",
-          caret_right = "", -- hacky : disable move carret to right and emulate pressing <CR> with <Right>
-          my_choose = {
-            char = "<Right>",
-            func = function()
-              vim.api.nvim_input "\r"
-            end,
-          },
-        },
-        options = {
-          use_cache = true,
-        },
-      }
     end,
     -- }}}
   },
@@ -778,47 +688,6 @@ return {
     end,
     -- }}}
   },
-  -- {
-  --   "nanozuki/tabby.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     -- require("tabby").setup {
-  --     --   preset = "active_wins_at_tail",
-  --     --   option = {
-  --     --     nerdfont = false,
-  --     --     -- lualine_theme = 'rose-pine',
-  --     --   },
-  --     -- }
-  --     local theme = {
-  --       fill = "TabLineFill",
-  --       -- fill = { fg = "#2a273f", bg = "#1f1c2c" }, --rosepine
-  --       head = "TabLine",
-  --       current_tab = "TabLineSel",
-  --       tab = "TabLine",
-  --       win = "TabLine",
-  --       tail = "TabLine",
-  --     }
-  --     require("tabby").setup {
-  --       line = function(line)
-  --         return {
-  --           line.tabs().foreach(function(tab)
-  --             local hl = tab.is_current() and theme.current_tab or theme.tab
-  --             return {
-  --               line.sep("", hl, theme.fill),
-  --               tab.name(),
-  --               tab.close_btn "🗙",
-  --               line.sep("", hl, theme.fill),
-  --               hl = hl,
-  --               margin = "  ",
-  --             }
-  --           end),
-  --           hl = theme.fill,
-  --         }
-  --       end,
-  --       -- option = {}, -- setup modules' option,
-  --     }
-  --   end,
-  -- },
   {
     "stevearc/conform.nvim",
     -- {{{
