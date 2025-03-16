@@ -40,6 +40,9 @@ map("n", "<leader><tab><Down>", "<cmd>tablast<CR>", { desc = "Go to last tab" })
 map("n", "<leader><tab>f", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close other tabs" })
 
+-- buffers
+map("n", "<BS>", "<c-^>", { desc = "Switch to alternate buffer" })
+
 -- Terminal
 map("t", "<tab><tab>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })

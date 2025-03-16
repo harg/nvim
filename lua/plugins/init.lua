@@ -52,20 +52,24 @@ return {
     -- Generate optimized colorscheme
     -- > Lazy Load kanagawa-paper.nvim
     -- > ExColors and save. Load the generated colorscheme in init.lua
-    lazy = "true", -- don't load by default, only on demand for generating optimized colorscheme
-    priority = 1000,
+    lazy = true, -- don't load by default, only on demand for generating optimized colorscheme
+    event = "VeryLazy",
+    -- priority = 1000,
     config = function()
       require("kanagawa-paper").setup {
         undercurl = false,
         transparent = false,
         gutter = false,
-        dimInactive = false, -- disabled when transparent
-        terminalColors = true,
-        commentStyle = { italic = false },
-        functionStyle = { italic = false },
-        keywordStyle = { italic = false, bold = false },
-        statementStyle = { italic = false, bold = false },
-        typeStyle = { italic = false },
+        dim_inactive = false, -- disabled when transparent
+        terminal_colors = true,
+        cache = false,
+        styles = {
+          comment = { italic = false },
+          functions = { italic = false },
+          keyword = { italic = false, bold = false },
+          statement = { italic = false, bold = false },
+          type = { italic = false },
+        },
         colors = {
           theme = {},
           palette = {
@@ -157,7 +161,14 @@ return {
         function()
           Snacks.picker.pickers()
         end,
-        desc = "All Snacks Pickers",
+        desc = "[Picker] All Pickers",
+      },
+      {
+        "<leader><leader>",
+        function()
+          Snacks.picker.files()
+        end,
+        desc = "[Picker] Files",
       },
       {
         "<leader>lg",
@@ -408,14 +419,14 @@ return {
     -- {{{
     version = false,
     keys = {
-      {
-        "<leader><leader>",
-        function()
-          require("mini.pick").builtin.files()
-        end,
-        desc = "Open mini.pick (Files)",
-      },
-      "<leader>/",
+      -- {
+      --   "<leader><leader>",
+      --   function()
+      --     require("mini.pick").builtin.files()
+      --   end,
+      --   desc = "Open mini.pick (Files)",
+      -- },
+      -- "<leader>/",
       --   Replaced by multi-grep.lua
       --   {
       --   "<leader>/",
