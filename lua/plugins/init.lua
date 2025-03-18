@@ -134,14 +134,21 @@ return {
       notifier     = { enabled = false },
       notify       = { enabled = false },
       picker       = { 
-        enabled = true, 
+        enabled = true,
         layout = {
           preset = "select",
           preview = false,
         },
         icons = { 
           files = { enabled = false } 
-        } 
+        },
+        win = {
+      input = {
+        keys = {
+          ["<C-q>"] = { "qflist_all", mode = { "n", "i" } },
+        },
+      },
+    },
       },
       profiler     = { enabled = true },
       quickfile    = { enabled = true },
