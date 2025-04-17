@@ -9,7 +9,7 @@ local g = vim.g
 opt.isfname:append { "(", ")" } -- fix filepath containing parenthesis
 
 -- disable nvim intro and search hit bottom message
-opt.shortmess:append "sI"
+opt.shortmess:append "sIc"
 
 -- numbers & cursor
 opt.number = true

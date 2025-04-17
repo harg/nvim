@@ -8,8 +8,9 @@ if vim.g.neovide then
   vim.g.neovide_hide_mouse_when_typing = true
   -- vim.o.guifont = "Inc0rsolata:h13.1:W100:#e-subpixelantialias:#h-slight"
   -- vim.o.guifont = "Iosevc0r540-350:h11.3:#e-subpixelantialias:#h-slight"
-  vim.o.guifont = "Hack:h12:#e-subpixelantialias:#h-slight"
-  vim.o.linespace = 1
+  -- vim.o.guifont = "Hack:h12:#e-subpixelantialias:#h-slight"
+  vim.o.guifont = "UnifontExMono:h12:#h-slight"
+  vim.o.linespace = 3
 end
 
 if vim.g.nvy then

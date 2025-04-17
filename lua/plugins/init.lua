@@ -591,6 +591,8 @@ return {
     "echasnovski/mini.completion",
     -- {{{
     version = false,
+    -- commit = "633b22be88dcc937b5b4e023464d2741ff03da7d",
+    enabled = true,
     event = "VeryLazy",
     keys = {
       {

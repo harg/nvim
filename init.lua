@@ -58,6 +58,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Load ExColors generated colorscheme
 vim.cmd "colorscheme ex-kanagawa-paper"
 
+-- Don't display deprecation messages
+vim.deprecate = function() end
+
 require("lazy").setup({ { import = "plugins" } }, {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
