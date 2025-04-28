@@ -6,11 +6,36 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_hide_mouse_when_typing = true
-  -- vim.o.guifont = "Inc0rsolata:h13.1:W100:#e-subpixelantialias:#h-slight"
-  -- vim.o.guifont = "Iosevc0r540-350:h11.3:#e-subpixelantialias:#h-slight"
-  -- vim.o.guifont = "Hack:h12:#e-subpixelantialias:#h-slight"
-  vim.o.guifont = "UnifontExMono:h12:#h-slight"
-  vim.o.linespace = 3
+  vim.g.neovide_cursor_smooth_blink = false
+  -- fonts
+  -- vim.o.guifont = "UnifontExMono:b:h12:#h-none"
+  -- vim.o.guifont = "Consolas_Nerd_Font_Mono:h12.4:#e-subpixelantialias:#h-slight"
+  --
+  vim.o.linespace = 4
+  vim.opt.guicursor = {
+    "n-v-c:block-Cursor/lCursor", -- Block cursor in normal, visual, and command modes
+    "i:ver25-blinkwait500-blinkoff700-blinkon700-Cursor/lCursor", -- Blinking vertical line in insert mode
+    "r-cr-o:hor20-Cursor/lCursor", -- Horizontal line cursor in replace, command-line replace, and operator-pending modes
+    "a:blinkwait500-blinkoff700-blinkon700", -- Global blinking settings for all modes
+  }
+
+  -- Kanagawa Paper palette terminal colors
+  vim.g.terminal_color_0 = "#1f1f28" -- black (bg)
+  vim.g.terminal_color_1 = "#E46876" -- red
+  vim.g.terminal_color_2 = "#9ece6a" -- green
+  vim.g.terminal_color_3 = "#e0af68" -- yellow
+  vim.g.terminal_color_4 = "#7aa2f7" -- blue
+  vim.g.terminal_color_5 = "#bb9af7" -- magenta
+  vim.g.terminal_color_6 = "#7dcfff" -- cyan
+  vim.g.terminal_color_7 = "#c0caf5" -- white (fg)
+  vim.g.terminal_color_8 = "#565f89" -- bright black (bright bg)
+  vim.g.terminal_color_9 = "#E46876" -- bright red
+  vim.g.terminal_color_10 = "#9ece6a" -- bright green
+  vim.g.terminal_color_11 = "#e0af68" -- bright yellow
+  vim.g.terminal_color_12 = "#7aa2f7" -- bright blue
+  vim.g.terminal_color_13 = "#bb9af7" -- bright magenta
+  vim.g.terminal_color_14 = "#7dcfff" -- bright cyan
+  vim.g.terminal_color_15 = "#dcd7ba" -- bright white
 end
 
 if vim.g.nvy then
