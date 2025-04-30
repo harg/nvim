@@ -1,4 +1,8 @@
 if vim.g.neovide then
+  -- mapping
+  vim.keymap.set({"!", "i"}, "<S-Insert>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
+  vim.keymap.set("v", "<S-Insert>", '"+pgv<Esc>', { desc = "Paste from system clipboard" }) -- paste from system clipboard
+
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_refresh_rate = 165
   vim.g.neovide_cursor_animation_length = 0

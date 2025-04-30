@@ -106,6 +106,8 @@ return {
       end
     end,
   },
+-- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
+-- https://www.sqlite.org/2025/sqlite-dll-win-x64-3480000.zip
   {
     "folke/snacks.nvim",
     priority = 1000,

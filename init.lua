@@ -55,6 +55,9 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Neovim in english please
+vim.cmd.language("en_US")
+
 -- Load ExColors generated colorscheme
 vim.cmd "colorscheme ex-kanagawa-paper"
 
@@ -63,7 +66,7 @@ vim.deprecate = function() end
 
 require("lazy").setup({ { import = "plugins" } }, {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
+  install = { colorscheme = { "ex-kanagawa-paper" } },
   checker = {
     enabled = false,
     notify = false,
