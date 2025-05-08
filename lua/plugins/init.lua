@@ -1,6 +1,7 @@
 return {
   -- {
   --   "vague2k/vague.nvim",
+  --   -- {{{
   --   lazy = false,
   --   priority = 1000,
   --   config = function()
@@ -26,6 +27,7 @@ return {
   --       vim.api.nvim_set_hl(0, group, style)
   --     end
   --   end,
+  --   -- }}}
   -- },
   -- {
   --   "rose-pine/neovim",
@@ -88,8 +90,44 @@ return {
         end,
       }
 
-      -- setup must be called before loading
       vim.cmd "colorscheme kanagawa-paper"
+    end,
+    -- }}}
+  },
+  {
+    "webhooked/kanso.nvim",
+    -- {{{
+    lazy = "Lazy",
+    priority = 1000,
+    config = function()
+      -- Default options:
+      require("kanso").setup {
+        compile = false, -- enable compiling the colorscheme
+        undercurl = true, -- enable undercurls
+        commentStyle = { italic = false },
+        functionStyle = {},
+        keywordStyle = { italic = false },
+        statementStyle = {},
+        typeStyle = {},
+        disableItalics = true,
+        transparent = false, -- do not set background color
+        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        colors = { -- add/modify theme and palette colors
+          palette = {},
+          theme = { zen = {}, pearl = {}, ink = {}, all = {} },
+        },
+        overrides = function(colors) -- add/modify highlights
+          return {}
+        end,
+        theme = "pearl", -- Load "zen" theme
+        background = { -- map the value of 'background' option to a theme
+          dark = "zen", -- try "ink" !
+          light = "pearl",
+        },
+      }
+
+      -- vim.cmd "colorscheme kanso-pearl"
     end,
     -- }}}
   },
@@ -106,8 +144,8 @@ return {
       end
     end,
   },
--- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
--- https://www.sqlite.org/2025/sqlite-dll-win-x64-3480000.zip
+  -- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
+  -- https://www.sqlite.org/2025/sqlite-dll-win-x64-3480000.zip
   {
     "folke/snacks.nvim",
     priority = 1000,

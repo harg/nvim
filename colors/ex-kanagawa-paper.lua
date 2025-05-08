@@ -46,7 +46,7 @@ vim.api.nvim_set_hl(
 vim.api.nvim_set_hl(0, "@tag.attribute", { fg = 12890762 })
 vim.api.nvim_set_hl(0, "@tag.delimiter", { fg = 10394515 })
 vim.api.nvim_set_hl(0, "@variable.builtin", { fg = 12874862 })
-vim.api.nvim_set_hl(0, "@variable.member", { fg = 14473146 })
+vim.api.nvim_set_hl(0, "@variable.member", { fg = 12874862 })
 vim.api.nvim_set_hl(0, "@variable.parameter", { fg = 10921628 })
 vim.api.nvim_set_hl(0, "Added", { fg = 6919273 })
 vim.api.nvim_set_hl(0, "Boolean", { bold = true, cterm = { bold = true }, fg = 11965051 })
