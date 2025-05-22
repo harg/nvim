@@ -30,6 +30,7 @@ opt.autoindent = true -- copy indent from current line when starting new one
 opt.wrap = false -- no wrap by default
 opt.linebreak = true -- wraps text at the end of a word
 opt.scrolloff = 4
+opt.sidescrolloff = 2
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching

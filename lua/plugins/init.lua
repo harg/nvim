@@ -97,7 +97,7 @@ return {
   {
     "webhooked/kanso.nvim",
     -- {{{
-    lazy = "Lazy",
+    lazy = true,
     priority = 1000,
     config = function()
       -- Default options:
@@ -129,6 +129,14 @@ return {
 
       -- vim.cmd "colorscheme kanso-pearl"
     end,
+    -- }}}
+  },
+  {
+    "wtfox/jellybeans.nvim",
+    -- {{{
+    lazy = true,
+    priority = 1000,
+    opts = {}, -- Optional
     -- }}}
   },
   {
