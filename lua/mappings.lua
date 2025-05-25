@@ -48,6 +48,9 @@ map("t", "<tab><tab>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
 map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>a]], { noremap = true, silent = true })
 
+-- New line
+map("n", "<leader><cr>", "o<Esc>", { desc = "Insert a new line" })
+
 -- Highlights
 map(
   "n",
