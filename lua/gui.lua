@@ -11,6 +11,11 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_cursor_smooth_blink = false
+  vim.g.neovide_padding_top = 10
+  vim.g.neovide_padding_bottom = 10
+  vim.g.neovide_padding_right = 10
+  vim.g.neovide_padding_left = 10
+
   -- fonts
   -- vim.o.guifont = "UnifontExMono:b:h12:#h-none"
   -- vim.o.guifont = "Consolas_Nerd_Font_Mono:h12.4:#e-subpixelantialias:#h-slight"
