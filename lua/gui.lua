@@ -1,6 +1,6 @@
 if vim.g.neovide then
   -- mapping
-  vim.keymap.set({"!", "i"}, "<S-Insert>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
+  vim.keymap.set({ "!", "i" }, "<S-Insert>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
   vim.keymap.set("v", "<S-Insert>", '"+pgv<Esc>', { desc = "Paste from system clipboard" }) -- paste from system clipboard
 
   vim.g.neovide_scroll_animation_length = 0
@@ -11,10 +11,10 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_cursor_smooth_blink = false
-  vim.g.neovide_padding_top = 10
-  vim.g.neovide_padding_bottom = 10
-  vim.g.neovide_padding_right = 10
-  vim.g.neovide_padding_left = 10
+  vim.g.neovide_padding_top = 7
+  vim.g.neovide_padding_bottom = 7
+  vim.g.neovide_padding_right = 7
+  vim.g.neovide_padding_left = 7
 
   -- fonts
   -- vim.o.guifont = "UnifontExMono:b:h12:#h-none"
