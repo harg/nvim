@@ -20,7 +20,7 @@ if vim.g.neovide then
   -- vim.o.guifont = "UnifontExMono:b:h12:#h-none"
   -- vim.o.guifont = "Consolas_Nerd_Font_Mono:h12.4:#e-subpixelantialias:#h-slight"
   --
-  vim.o.linespace = 4
+  vim.o.linespace = 2
   vim.opt.guicursor = {
     "n-v-c:block-Cursor/lCursor", -- Block cursor in normal, visual, and command modes
     "i:ver25-blinkwait500-blinkoff700-blinkon700-Cursor/lCursor", -- Blinking vertical line in insert mode
