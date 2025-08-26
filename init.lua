@@ -56,10 +56,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Neovim in english please
-local ok, result = pcall(
-  vim.cmd,
-  'language en_US'
-)
+local ok, result = pcall(vim.cmd, "language en_US.UTF-8")
 -- vim.cmd.language("en_US")
 
 -- Load ExColors generated colorscheme
