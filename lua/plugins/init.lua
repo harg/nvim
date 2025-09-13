@@ -140,7 +140,7 @@ return {
     -- }}}
   },
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {},
     specs = {
       { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
@@ -150,6 +150,18 @@ return {
         require("mini.icons").mock_nvim_web_devicons()
         return package.loaded["nvim-web-devicons"]
       end
+    end,
+  },
+  {
+    "nvim-mini/mini.sessions",
+    version = false,
+    lazy = false,
+    event = "VeryLazy",
+    config = function()
+      require("mini.sessions").setup {
+        autoread = true,
+        force = { read = false, write = true, delete = true },
+      }
     end,
   },
   -- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
@@ -412,7 +424,7 @@ return {
     },
   },
   -- {
-  --   "echasnovski/mini.extra",
+  --   "nvim-mini/mini.extra",
   --   -- {{{
   --   version = false,
   --   config = function()
@@ -421,7 +433,7 @@ return {
   --   -- }}}
   -- },
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     -- {{{
     version = false,
     opts = {
@@ -515,7 +527,7 @@ return {
     -- }}}
   },
   {
-    "echasnovski/mini.diff",
+    "nvim-mini/mini.diff",
     -- {{{
     version = false,
     event = "VeryLazy",
@@ -535,7 +547,7 @@ return {
     -- }}}
   },
   {
-    "echasnovski/mini.align",
+    "nvim-mini/mini.align",
     -- {{{
     version = false,
     keys = {
@@ -548,7 +560,7 @@ return {
     -- }}}
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     -- {{{
     version = false,
     keys = {
@@ -570,7 +582,7 @@ return {
     -- }}}
   },
   {
-    "echasnovski/mini.comment",
+    "nvim-mini/mini.comment",
     -- {{{
     version = false,
     event = "VeryLazy",
@@ -636,7 +648,7 @@ return {
   },
 
   {
-    "echasnovski/mini.completion",
+    "nvim-mini/mini.completion",
     -- {{{
     version = false,
     -- commit = "633b22be88dcc937b5b4e023464d2741ff03da7d",
