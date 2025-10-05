@@ -182,7 +182,7 @@ return {
       git          = { enabled = true },
       gitbrowse    = { enabled = true },
       indent       = { enabled = false },
-      input        = { enabled = true },
+      input        = { enabled = false },
       lazygit      = { 
         enabled = true,
         config = {
@@ -821,5 +821,52 @@ return {
     "aileot/ex-colors.nvim",
     cmd = { "ExColors" },
     opts = {},
+  },
+  {
+    "atiladefreitas/dooing",
+    event = "VeryLazy",
+    config = function()
+      require("dooing").setup {
+
+        window = {
+          width = 75, -- Width of the floating window
+          height = 30, -- Height of the floating window
+          border = "rounded", -- Border style
+          position = "top", -- Window position: 'right', 'left', 'top', 'bottom', 'center',
+          -- 'top-right', 'top-left', 'bottom-right', 'bottom-left'
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 2,
+            right = 2,
+          },
+        },
+
+        keymaps = {
+          close_window = "<leader>td",
+        },
+
+        formatting = {
+          pending = {
+            icon = "○",
+            format = { "icon", "notes_icon", "text", "due_date", "ect" },
+          },
+          in_progress = {
+            icon = "•",
+            format = { "icon", "text", "due_date", "ect" },
+          },
+          done = {
+            icon = "✓",
+            format = { "icon", "notes_icon", "text", "due_date", "ect" },
+          },
+        },
+
+        quick_keys = false, -- Quick keys window
+
+        notes = {
+          icon = "§",
+        },
+      }
+    end,
   },
 }
