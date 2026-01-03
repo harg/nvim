@@ -86,6 +86,20 @@ return {
         overrides = function() -- override highlight groups
           return {
             ["@variable.builtin"] = { fg = "#c4746e", italic = false },
+            Bold = { bold = false },
+            Boolean = { bold = false },
+            CurSearch = { bold = false },
+            ModeMsg = { bold = false },
+            CursorLineNr = { bold = false },
+            Title = { bold = false },
+            DiffText = { bold = false },
+            Conceal = { bold = false },
+            PmenuMatch = { bold = false },
+            PmenuMatchSel = { bold = false },
+            FloatTitle = { bold = false },
+            MatchParen = { bold = false },
+            MiniFilesTitle = { bold = false },
+            MiniFilesTitleFocused = { bold = false },
           }
         end,
       }
@@ -139,19 +153,19 @@ return {
     opts = {}, -- Optional
     -- }}}
   },
-  {
-    "nvim-mini/mini.icons",
-    opts = {},
-    specs = {
-      { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-    },
-    init = function()
-      package.preload["nvim-web-devicons"] = function()
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
-      end
-    end,
-  },
+  -- {
+  --   "nvim-mini/mini.icons",
+  --   opts = {},
+  --   specs = {
+  --     { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+  --   },
+  --   init = function()
+  --     package.preload["nvim-web-devicons"] = function()
+  --       require("mini.icons").mock_nvim_web_devicons()
+  --       return package.loaded["nvim-web-devicons"]
+  --     end
+  --   end,
+  -- },
   {
     "nvim-mini/mini.sessions",
     version = false,
@@ -443,6 +457,12 @@ return {
         width_preview = 30,
       },
       content = { prefix = function() end }, -- hide icons
+      -- content = {
+      --   prefix = function(fs_entry)
+      --     local icon, hl = MiniFiles.default_prefix(fs_entry)
+      --     return " " .. icon .. " ", hl
+      --   end,
+      -- },
       mappings = {
         close = "<leader>e",
         go_in = "l",
@@ -821,52 +841,5 @@ return {
     "aileot/ex-colors.nvim",
     cmd = { "ExColors" },
     opts = {},
-  },
-  {
-    "atiladefreitas/dooing",
-    event = "VeryLazy",
-    config = function()
-      require("dooing").setup {
-
-        window = {
-          width = 75, -- Width of the floating window
-          height = 30, -- Height of the floating window
-          border = "rounded", -- Border style
-          position = "top", -- Window position: 'right', 'left', 'top', 'bottom', 'center',
-          -- 'top-right', 'top-left', 'bottom-right', 'bottom-left'
-          padding = {
-            top = 1,
-            bottom = 1,
-            left = 2,
-            right = 2,
-          },
-        },
-
-        keymaps = {
-          close_window = "<leader>td",
-        },
-
-        formatting = {
-          pending = {
-            icon = "○",
-            format = { "icon", "notes_icon", "text", "due_date", "ect" },
-          },
-          in_progress = {
-            icon = "•",
-            format = { "icon", "text", "due_date", "ect" },
-          },
-          done = {
-            icon = "✓",
-            format = { "icon", "notes_icon", "text", "due_date", "ect" },
-          },
-        },
-
-        quick_keys = false, -- Quick keys window
-
-        notes = {
-          icon = "§",
-        },
-      }
-    end,
   },
 }

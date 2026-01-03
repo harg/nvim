@@ -135,3 +135,7 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+vim.api.nvim_create_user_command("Todos", function()
+  require("todos").open()
+end, {})
