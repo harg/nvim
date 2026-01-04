@@ -101,6 +101,10 @@ function M.create_todo()
   -- Mark buffer as saved
   vim.bo[buf].modified = false
 
+  vim.schedule(function()
+    M.save_todos()
+  end)
+
   close_and_focus(state.title_win, state.todos_win)
 
   print "Todo Created!"
@@ -157,6 +161,10 @@ function M.update_todo()
 
   -- Mark buffer as saved
   vim.bo[buf].modified = false
+
+  vim.schedule(function()
+    M.save_todos()
+  end)
 
   close_and_focus(state.title_win, state.todos_win)
 
@@ -226,6 +234,10 @@ function M.delete_todo()
   -- update ui
   titles_buf_set_lines(state.current_line - 1, state.current_line, {})
 
+  vim.schedule(function()
+    M.save_todos()
+  end)
+
   print "Todo Deleted!"
 end
 
@@ -241,6 +253,10 @@ function M.update_body()
 
   -- Mark buffer as saved
   vim.bo[buf].modified = false
+
+  vim.schedule(function()
+    M.save_todos()
+  end)
 
   close_and_focus(state.body_win, state.todos_win)
 
