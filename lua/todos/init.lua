@@ -9,6 +9,13 @@ local state = {
   body_buf = nil,
 }
 
+vim.fn.sign_define("body_sign", {
+  text = "§",
+  texthl = "DiagnosticHint",
+  linehl = "",
+  numhl = "",
+})
+
 ---Table Helpers
 local function table_insert_after(tbl, index, value)
   table.insert(tbl, index + 1, value)
@@ -64,6 +71,28 @@ local function render_titles()
   vim.api.nvim_buf_set_lines(state.titles_buf, 0, -1, false, titles)
 end
 
+local function render_body_signs()
+  local sign_group = "TodosBodySign"
+  local sign_name = "body_sign"
+
+  -- remove all signs
+  vim.fn.sign_unplace("*", {
+    buffer = state.titles_buf,
+  })
+
+  for i, todo in ipairs(state.todos) do
+    if table_is_empty(todo.body) == false then
+      vim.fn.sign_place(
+        0, -- sign ID (0 = auto-assign)
+        sign_group, -- sign group
+        sign_name, -- sign name
+        state.titles_buf, -- buffer (0 = current)
+        { lnum = i } -- line number
+      )
+    end
+  end
+end
+
 function M.save_todos()
   -- write state in data.json
   local path = vim.fn.stdpath "data" .. "/todos/data.json"
@@ -102,6 +131,7 @@ function M.create_todo()
   vim.bo[buf].modified = false
 
   vim.schedule(function()
+    render_body_signs()
     M.save_todos()
   end)
 
@@ -163,6 +193,7 @@ function M.update_todo()
   vim.bo[buf].modified = false
 
   vim.schedule(function()
+    render_body_signs()
     M.save_todos()
   end)
 
@@ -235,6 +266,7 @@ function M.delete_todo()
   titles_buf_set_lines(state.current_line - 1, state.current_line, {})
 
   vim.schedule(function()
+    render_body_signs()
     M.save_todos()
   end)
 
@@ -248,6 +280,11 @@ function M.update_body()
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
 
+  -- check if no content {""}
+  if #lines == 1 and lines[1] == "" then
+    lines = {}
+  end
+
   -- update state
   state.todos[state.current_line] = { title = state.todos[state.current_line].title, body = lines }
 
@@ -255,6 +292,7 @@ function M.update_body()
   vim.bo[buf].modified = false
 
   vim.schedule(function()
+    render_body_signs()
     M.save_todos()
   end)
 
@@ -322,6 +360,7 @@ function M.open()
 
   load_todos()
   render_titles()
+  render_body_signs()
 
   vim.api.nvim_set_option_value("modifiable", false, { buf = state.titles_buf })
   vim.api.nvim_set_option_value("modified", false, { buf = state.titles_buf }) -- get rid of [+]
