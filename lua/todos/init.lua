@@ -10,7 +10,14 @@ local state = {
 }
 
 vim.fn.sign_define("body_sign", {
-  text = "§",
+  text = "->",
+  texthl = "DiagnosticHint",
+  linehl = "",
+  numhl = "",
+})
+
+vim.fn.sign_define("list_sign", {
+  text = " -",
   texthl = "DiagnosticHint",
   linehl = "",
   numhl = "",
@@ -72,9 +79,6 @@ local function render_titles()
 end
 
 local function render_body_signs()
-  local sign_group = "TodosBodySign"
-  local sign_name = "body_sign"
-
   -- remove all signs
   vim.fn.sign_unplace("*", {
     buffer = state.titles_buf,
@@ -84,8 +88,16 @@ local function render_body_signs()
     if table_is_empty(todo.body) == false then
       vim.fn.sign_place(
         0, -- sign ID (0 = auto-assign)
-        sign_group, -- sign group
-        sign_name, -- sign name
+        "TodosBodySign", -- sign group
+        "body_sign", -- sign name
+        state.titles_buf, -- buffer (0 = current)
+        { lnum = i } -- line number
+      )
+    else
+      vim.fn.sign_place(
+        0, -- sign ID (0 = auto-assign)
+        "TodosListSign", -- sign group
+        "list_sign", -- sign name
         state.titles_buf, -- buffer (0 = current)
         { lnum = i } -- line number
       )
@@ -364,6 +376,8 @@ function M.open()
 
   vim.api.nvim_set_option_value("modifiable", false, { buf = state.titles_buf })
   vim.api.nvim_set_option_value("modified", false, { buf = state.titles_buf }) -- get rid of [+]
+  vim.api.nvim_set_option_value("number", false, { scope = "local" })
+  vim.api.nvim_set_option_value("signcolumn", "yes:2", { scope = "local" })
 
   -- mappings
   vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "=", ':lua require("todos").save_todos()<CR>', { noremap = true })
