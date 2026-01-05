@@ -31,6 +31,25 @@ end
 local function table_is_empty(tbl)
   return next(tbl) == nil
 end
+
+local function table_swap_adjacent(tbl, index, direction)
+  -- direction: -1 for previous, 1 for next
+  local target = index + direction
+
+  -- Validate indices
+  if index < 1 or index > #tbl then
+    return
+  end
+  if target < 1 or target > #tbl then
+    return
+  end
+
+  -- Perform swap
+  tbl[index], tbl[target] = tbl[target], tbl[index]
+
+  return
+end
+
 ---
 --- UI Helpers
 local function close_and_focus(win_close, win_focus)
@@ -225,8 +244,7 @@ function M.edit_todo()
   state.current_line = cursor[1]
 
   -- Get current line content
-  local line_content =
-    vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
+  local line_content = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
 
   -- Create a new buffer for editing
   local buf = vim.api.nvim_create_buf(false, true)
@@ -319,13 +337,11 @@ function M.edit_body()
   end
 
   -- Get current cursor
-
   local cursor = vim.api.nvim_win_get_cursor(state.todos_win)
   state.current_line = cursor[1]
 
   -- Get current line content
-  local title_content =
-    vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
+  local title_content = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
   local body_content = state.todos[state.current_line].body
 
   -- Create a new buffer for editing
@@ -361,6 +377,71 @@ function M.edit_body()
   vim.api.nvim_buf_set_keymap(buf, "n", "<esc>", ':lua require("todos").update_body()<CR>', { noremap = true })
 end
 
+--- MOVE UP
+
+function M.move_up()
+  -- Get current cursor
+  local cursor = vim.api.nvim_win_get_cursor(state.todos_win)
+  state.current_line = cursor[1]
+
+  -- Check if we can move up
+  if state.current_line <= 1 then
+    return
+  end
+
+  -- update state
+  table_swap_adjacent(state.todos, state.current_line, -1)
+
+  -- update UI
+  local current = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
+  local previous = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 2, state.current_line - 1, false)[1]
+
+  vim.api.nvim_set_option_value("modifiable", true, { buf = state.titles_buf })
+  vim.api.nvim_buf_set_lines(state.titles_buf, state.current_line - 2, state.current_line - 1, false, { current })
+  vim.api.nvim_buf_set_lines(state.titles_buf, state.current_line - 1, state.current_line, false, { previous })
+  vim.api.nvim_set_option_value("modifiable", false, { buf = state.titles_buf })
+  vim.api.nvim_set_option_value("modified", false, { buf = state.titles_buf })
+
+  vim.api.nvim_win_set_cursor(state.todos_win, { state.current_line - 1, cursor[2] })
+
+  vim.schedule(function()
+    render_body_signs()
+    M.save_todos()
+  end)
+end
+
+--- MOVE DOWN
+
+function M.move_down()
+  -- Get current cursor
+  local cursor = vim.api.nvim_win_get_cursor(state.todos_win)
+  state.current_line = cursor[1]
+
+  -- Check if we can move up
+  if state.current_line >= vim.api.nvim_buf_line_count(state.titles_buf) then
+    return
+  end
+
+  -- update state
+  table_swap_adjacent(state.todos, state.current_line, 1) -- 1 for down, -1 for up
+
+  -- update UI
+  local current = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line - 1, state.current_line, false)[1]
+  local next = vim.api.nvim_buf_get_lines(state.titles_buf, state.current_line, state.current_line + 1, false)[1]
+
+  vim.api.nvim_set_option_value("modifiable", true, { buf = state.titles_buf })
+  vim.api.nvim_buf_set_lines(state.titles_buf, state.current_line - 1, state.current_line, false, { next })
+  vim.api.nvim_buf_set_lines(state.titles_buf, state.current_line, state.current_line + 1, false, { current })
+  vim.api.nvim_set_option_value("modifiable", false, { buf = state.titles_buf })
+  vim.api.nvim_set_option_value("modified", false, { buf = state.titles_buf })
+
+  vim.api.nvim_win_set_cursor(state.todos_win, { state.current_line + 1, cursor[2] })
+
+  vim.schedule(function()
+    render_body_signs()
+    M.save_todos()
+  end)
+end
 -------------
 
 function M.open()
@@ -380,34 +461,27 @@ function M.open()
   vim.api.nvim_set_option_value("signcolumn", "yes:2", { scope = "local" })
 
   -- mappings
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "=", ':lua require("todos").save_todos()<CR>', { noremap = true })
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "v", "=", ':lua require("todos").save_todos()<CR>', { noremap = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "=", ':lua require("todos").save_todos()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "v", "=", ':lua require("todos").save_todos()<CR>', { noremap = true, silent = true })
 
   -- Override common edit keys
   local keys = { "i", "I", "a", "A", "s", "S", "c", "C", "x", "X", "p", "P", "r", "R" }
   for _, key in ipairs(keys) do
-    vim.api.nvim_buf_set_keymap(state.titles_buf, "n", key, ':lua require("todos").edit_todo()<CR>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(state.titles_buf, "n", key, ':lua require("todos").edit_todo()<CR>', { noremap = true, silent = true })
   end
 
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "o", ':lua require("todos").new_todo()<CR>', { noremap = true })
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "O", ':lua require("todos").new_todo()<CR>', { noremap = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "o", ':lua require("todos").new_todo()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "O", ':lua require("todos").new_todo()<CR>', { noremap = true, silent = true })
 
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "D", ':lua require("todos").delete_todo()<CR>', { noremap = true })
-  vim.api.nvim_buf_set_keymap(
-    state.titles_buf,
-    "n",
-    "dd",
-    ':lua require("todos").delete_todo()<CR>',
-    { noremap = true }
-  )
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "D", ':lua require("todos").delete_todo()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "dd", ':lua require("todos").delete_todo()<CR>', { noremap = true, silent = true })
 
-  vim.api.nvim_buf_set_keymap(
-    state.titles_buf,
-    "n",
-    "<CR>",
-    ':lua require("todos").edit_body()<CR>',
-    { noremap = true }
-  )
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "<CR>", ':lua require("todos").edit_body()<CR>', { noremap = true, silent = true })
+
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "<C-k>", ':lua require("todos").move_up()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "<C-Up>", ':lua require("todos").move_up()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "<C-j>", ':lua require("todos").move_down()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "<C-Down>", ':lua require("todos").move_down()<CR>', { noremap = true, silent = true })
 end
 
 return M
