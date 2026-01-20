@@ -10,14 +10,14 @@ local state = {
 }
 
 vim.fn.sign_define("body_sign", {
-  text = "->",
+  text = " ",
   texthl = "DiagnosticHint",
   linehl = "",
   numhl = "",
 })
 
 vim.fn.sign_define("list_sign", {
-  text = " -",
+  text = " ",
   texthl = "DiagnosticHint",
   linehl = "",
   numhl = "",
