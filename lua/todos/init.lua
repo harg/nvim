@@ -50,6 +50,11 @@ local function table_swap_adjacent(tbl, index, direction)
   return
 end
 
+---String Helpers
+local function string_starts_with(str, start)
+  return string.sub(str, 1, string.len(start)) == start
+end
+
 ---
 --- UI Helpers
 local function close_and_focus(win_close, win_focus)
@@ -113,13 +118,15 @@ local function render_body_signs()
         { lnum = i } -- line number
       )
     else
-      vim.fn.sign_place(
-        0, -- sign ID (0 = auto-assign)
-        "TodosListSign", -- sign group
-        "list_sign", -- sign name
-        state.titles_buf, -- buffer (0 = current)
-        { lnum = i } -- line number
-      )
+      if (todo.title ~= "") and (not string_starts_with(todo.title, "_")) and (not string_starts_with(todo.title, "⎯")) then
+        vim.fn.sign_place(
+          0, -- sign ID (0 = auto-assign)
+          "TodosListSign", -- sign group
+          "list_sign", -- sign name
+          state.titles_buf, -- buffer (0 = current)
+          { lnum = i } -- line number
+        )
+      end
     end
   end
 end
@@ -267,7 +274,7 @@ function M.edit_todo()
     col = col,
     style = "minimal",
     border = "rounded",
-    title = " Edit Todo - " .. line_content,
+    title = " [Edit Todo]  " .. line_content .. " ",
     title_pos = "center",
   })
 
@@ -365,7 +372,7 @@ function M.edit_body()
     col = col,
     style = "minimal",
     border = "rounded",
-    title = " Edit Body - " .. title_content,
+    title = " [Edit Body]  " .. title_content .. " ",
     title_pos = "center",
   })
 
