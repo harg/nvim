@@ -208,7 +208,7 @@ function M.new_todo(direction)
     col = col,
     style = "minimal",
     border = "rounded",
-    title = "New todo",
+    title = " [New todo] ",
     title_pos = "center",
   })
 
@@ -282,7 +282,7 @@ function M.edit_todo()
     col = col,
     style = "minimal",
     border = "rounded",
-    title = " [Edit Todo]  " .. line_content .. " ",
+    title = " [Edit Todo] " .. line_content .. " ",
     title_pos = "center",
   })
 
@@ -380,7 +380,7 @@ function M.edit_body()
     col = col,
     style = "minimal",
     border = "rounded",
-    title = " [Edit Body]  " .. title_content .. " ",
+    title = " [Edit Body] " .. title_content .. " ",
     title_pos = "center",
   })
 
