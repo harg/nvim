@@ -141,7 +141,9 @@ end
 
 --- NEW TODO
 
-function M.create_todo()
+function M.create_todo(direction)
+  -- direction: -1 for previous, 1 for next
+  --
   -- Get all lines from the float buffer
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
@@ -158,11 +160,15 @@ function M.create_todo()
     -- update ui
     titles_buf_set_lines(state.current_line - 1, state.current_line, { todo.title })
   else
-    -- update state
-    table_insert_after(state.todos, state.current_line, todo)
-    -- update ui
-    titles_buf_set_lines(state.current_line, state.current_line, { todo.title })
-    vim.api.nvim_win_set_cursor(state.todos_win, { state.current_line + 1, 0 })
+    if direction == 1 then -- insert after
+      table_insert_after(state.todos, state.current_line, todo) -- state
+      titles_buf_set_lines(state.current_line, state.current_line, { todo.title })
+      vim.api.nvim_win_set_cursor(state.todos_win, { state.current_line + 1, 0 })
+    else -- insert before
+      table.insert(state.todos, state.current_line, todo)
+      titles_buf_set_lines(state.current_line - 1, state.current_line - 1, { todo.title })
+      vim.api.nvim_win_set_cursor(state.todos_win, { state.current_line, 0 })
+    end
   end
 
   -- Mark buffer as saved
@@ -178,7 +184,9 @@ function M.create_todo()
   print "Todo Created!"
 end
 
-function M.new_todo()
+function M.new_todo(direction)
+  -- direction: -1 for previous, 1 for next
+  direction = direction or 1
   -- Get current cursor
   local cursor = vim.api.nvim_win_get_cursor(state.todos_win)
   state.current_line = cursor[1]
@@ -209,7 +217,7 @@ function M.new_todo()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
 
-  vim.api.nvim_buf_set_keymap(buf, "n", "<esc>", ':lua require("todos").create_todo()<CR>', { noremap = true })
+  vim.api.nvim_buf_set_keymap(buf, "n", "<esc>", ':lua require("todos").create_todo(' .. direction .. ")<CR>", { noremap = true })
 end
 
 --- UPDATE TODO
@@ -478,7 +486,7 @@ function M.open()
   end
 
   vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "o", ':lua require("todos").new_todo()<CR>', { noremap = true, silent = true })
-  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "O", ':lua require("todos").new_todo()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "O", ':lua require("todos").new_todo(-1)<CR>', { noremap = true, silent = true })
 
   vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "D", ':lua require("todos").delete_todo()<CR>', { noremap = true, silent = true })
   vim.api.nvim_buf_set_keymap(state.titles_buf, "n", "dd", ':lua require("todos").delete_todo()<CR>', { noremap = true, silent = true })
