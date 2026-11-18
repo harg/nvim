@@ -56,24 +56,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Neovim in english please
-local ok, result = pcall(vim.cmd, "language en_US.UTF-8")
--- vim.cmd.language("en_US")
-
--- Load ExColors generated colorscheme
-vim.cmd "colorscheme ex-kanagawa-paper"
+pcall(vim.cmd, "language en_US.UTF-8")
 
 -- Don't display deprecation messages
 vim.deprecate = function() end
 
 require("lazy").setup({ { import = "plugins" } }, {
   defaults = { lazy = true },
-  install = { colorscheme = { "ex-kanagawa-paper" } },
+  install = { colorscheme = { "kanagawa-paper" } },
   checker = {
     enabled = false,
     notify = false,
   },
   change_detection = {
-    enable = false,
+    enabled = false,
     notify = false,
   },
   ui = {
@@ -95,34 +91,16 @@ require("lazy").setup({ { import = "plugins" } }, {
   },
   performance = {
     rtp = {
+      -- names of files in $VIMRUNTIME/plugin/
       disabled_plugins = {
-        "2html_plugin",
-        "tohtml",
-        "getscript",
-        "getscriptPlugin",
         "gzip",
-        "logipat",
-        "netrw",
-        "netrwPlugin",
-        "netrwSettings",
-        "netrwFileHandlers",
         "matchit",
-        "tar",
-        "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
-        "zip",
-        "zipPlugin",
-        "tutor",
+        "netrwPlugin",
         "rplugin",
-        "syntax",
-        "synmenu",
-        "optwin",
-        "compiler",
-        "bugreport",
-        "ftplugin",
+        "spellfile",
+        "tarPlugin",
+        "tutor",
+        "zipPlugin",
       },
     },
   },

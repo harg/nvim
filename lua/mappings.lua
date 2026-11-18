@@ -5,19 +5,15 @@ local map = vim.keymap.set -- for conciseness
 map("v", "<C-Insert>", '"+ygv<Esc>', { desc = "Copy to system clipboard" }) -- copy to system clipboard
 map("v", "<C-c>", '"+ygv<Esc>', { desc = "Copy to system clipboard" }) -- copy to system clipboard
 
--- map("!", "<S-Insert>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
--- map("i", "<C-v>", "<C-R>+", { desc = "Paste from system clipboard" }) -- paste from system clipboard
--- map("i", "<C-v>", [[<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>]])
--- map("i", "<C-v>", "<Esc>v\"+pgv<Esc>a", { desc = "Paste from system clipboard" }) -- paste from system clipboard
-map("i", "<C-v>", '<Esc>"+p', { desc = "Paste from system clipboard" }) -- paste from system clipboard
+map("i", "<C-v>", "<C-r><C-o>+", { desc = "Paste from system clipboard" }) -- paste literally, stay in insert mode
 map("v", "<C-v>", '"+pgv<Esc>', { desc = "Paste from system clipboard" }) -- paste from system clipboard
 
 map("v", "<C-x>", '"+x', { desc = "Cut from system clipboard" }) -- cut to system clipboard
 
 -- save...
-map("n", "<C-S>", ":update<CR>", { noremap = true, desc = "Save current buffer" }) -- save current buffer
-map("v", "<C-S>", "<C-C>:update<CR>", { noremap = true, desc = "Save current buffer" }) -- save current buffer
-map("i", "<C-S>", "<Esc>:update<CR>gi", { noremap = true, desc = "Save current buffer" }) -- save current buffer
+map("n", "<C-S>", "<cmd>update<CR>", { desc = "Save current buffer" })
+map("v", "<C-S>", "<Esc><cmd>update<CR>", { desc = "Save current buffer" })
+map("i", "<C-S>", "<cmd>update<CR>", { desc = "Save current buffer" }) -- stays in insert mode
 
 -- window management
 map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
@@ -44,9 +40,8 @@ map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close other tabs" })
 map("n", "<BS>", "<c-^>", { desc = "Switch to alternate buffer" })
 
 -- Terminal
-map("t", "<tab><tab>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
-map("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, desc = "Switch to Normal mode" })
-map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>a]], { noremap = true, silent = true })
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Switch to Normal mode" })
+map("n", "<leader>tt", [[:tabnew | terminal<CR><ESC><ESC>:vsplit | terminal<CR>a]], { silent = true })
 
 -- New line
 map("n", "<leader><cr>", "o<Esc>", { desc = "Insert a new line" })
@@ -56,7 +51,7 @@ map(
   "n",
   "<F10>",
   [[:lua print(vim.inspect(vim.treesitter.get_captures_at_cursor(0)))<CR>]],
-  { noremap = true, silent = true }
+  { silent = true }
 )
 
 -- Spell

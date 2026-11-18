@@ -1,53 +1,4 @@
 return {
-  -- {
-  --   "vague2k/vague.nvim",
-  --   -- {{{
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("vague").setup {
-  --       style = {
-  --         comments = "none",
-  --         strings = "none",
-  --       },
-  --       colors = {
-  --         hint = "#7894ab",
-  --       },
-  --     }
-  --
-  --     vim.cmd "colorscheme vague"
-  --
-  --     group_styles = {
-  --       ["StatusLine"] = { fg = "#646477", bg = "#222222" },
-  --       ["WinSeparator"] = { fg = "#444444" },
-  --       ["EndOfBuffer"] = { fg = "#444444" },
-  --     }
-  --
-  --     for group, style in pairs(group_styles) do
-  --       vim.api.nvim_set_hl(0, group, style)
-  --     end
-  --   end,
-  --   -- }}}
-  -- },
-  -- {
-  --   "rose-pine/neovim",
-  --   -- {{{
-  --   name = "rose-pine",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("rose-pine").setup {
-  --       styles = {
-  --         bold = false,
-  --         italic = false,
-  --         transparency = false,
-  --       },
-  --     }
-  --
-  --     vim.cmd "colorscheme rose-pine-moon"
-  --   end,
-  --   -- }}}
-  -- },
   {
     "thesimonho/kanagawa-paper",
     -- {{{
@@ -76,9 +27,6 @@ return {
         colors = {
           theme = {},
           palette = {
-            -- samuraiRed = "#e82424",
-            -- roninYellow = "#ff9e3b",
-            --
             samuraiRed = "#e07b75",
             lotusRed3 = "#e07b75",
             roninYellow = "#f1a050",
@@ -112,71 +60,13 @@ return {
     end,
     -- }}}
   },
-  {
-    "webhooked/kanso.nvim",
-    -- {{{
-    lazy = true,
-    priority = 1000,
-    config = function()
-      -- Default options:
-      require("kanso").setup {
-        compile = false, -- enable compiling the colorscheme
-        undercurl = true, -- enable undercurls
-        commentStyle = { italic = false },
-        functionStyle = {},
-        keywordStyle = { italic = false },
-        statementStyle = {},
-        typeStyle = {},
-        disableItalics = true,
-        transparent = false, -- do not set background color
-        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-        terminalColors = true, -- define vim.g.terminal_color_{0,17}
-        colors = { -- add/modify theme and palette colors
-          palette = {},
-          theme = { zen = {}, pearl = {}, ink = {}, all = {} },
-        },
-        overrides = function(colors) -- add/modify highlights
-          return {}
-        end,
-        theme = "pearl", -- Load "zen" theme
-        background = { -- map the value of 'background' option to a theme
-          dark = "zen", -- try "ink" !
-          light = "pearl",
-        },
-      }
-
-      -- vim.cmd "colorscheme kanso-pearl"
-    end,
-    -- }}}
-  },
-  {
-    "wtfox/jellybeans.nvim",
-    -- {{{
-    lazy = true,
-    priority = 1000,
-    opts = {}, -- Optional
-    -- }}}
-  },
-  -- {
-  --   "nvim-mini/mini.icons",
-  --   opts = {},
-  --   specs = {
-  --     { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-  --   },
-  --   init = function()
-  --     package.preload["nvim-web-devicons"] = function()
-  --       require("mini.icons").mock_nvim_web_devicons()
-  --       return package.loaded["nvim-web-devicons"]
-  --     end
-  --   end,
-  -- },
   -- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
   -- https://www.sqlite.org/2025/sqlite-dll-win-x64-3480000.zip
   {
     "folke/snacks.nvim",
-    priority = 1000,
+    -- {{{
+    priority = 1000, -- recommended by snacks (bigfile / quickfile must run early)
     lazy = false,
-    event = "VeryLazy",
     -- stylua: ignore
     opts = {
       animate      = { enabled = false },
@@ -189,32 +79,32 @@ return {
       gitbrowse    = { enabled = true },
       indent       = { enabled = false },
       input        = { enabled = false },
-      lazygit      = { 
+      lazygit      = {
         enabled = true,
         config = {
           gui = {
             nerdFontsVersion = "",
-          }
-        }
+          },
+        },
       },
       notifier     = { enabled = false },
       notify       = { enabled = false },
-      picker       = { 
+      picker       = {
         enabled = true,
         layout = {
           preset = "select",
           preview = false,
         },
-        icons = { 
-          files = { enabled = false } 
+        icons = {
+          files = { enabled = false },
         },
         win = {
-      input = {
-        keys = {
-          ["<C-q>"] = { "qflist_all", mode = { "n", "i" } },
+          input = {
+            keys = {
+              ["<C-q>"] = { "qflist_all", mode = { "n", "i" } },
+            },
+          },
         },
-      },
-    },
       },
       profiler     = { enabled = true },
       quickfile    = { enabled = true },
@@ -357,7 +247,7 @@ return {
         desc = "[Picker] Git Status",
       },
       {
-        "<leader>lg",
+        "<leader>gl",
         function()
           Snacks.lazygit()
         end,
@@ -428,20 +318,32 @@ return {
         mode = { "n", "t" },
       },
     },
+    -- }}}
   },
-  -- {
-  --   "nvim-mini/mini.extra",
-  --   -- {{{
-  --   version = false,
-  --   config = function()
-  --     require("mini.extra").setup()
-  --   end,
-  --   -- }}}
-  -- },
   {
     "nvim-mini/mini.files",
     -- {{{
     version = false,
+    init = function()
+      -- mini.files is lazy-loaded, so its `use_as_default_explorer` hook doesn't exist yet
+      -- when a directory is opened (e.g. `nvim .`). Load it on the first directory buffer.
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = vim.api.nvim_create_augroup("MiniFilesLazyDirectory", { clear = true }),
+        callback = function(ev)
+          local path = vim.api.nvim_buf_get_name(ev.buf)
+          if path == "" or vim.fn.isdirectory(path) == 0 then
+            return
+          end
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(ev.buf) then
+              vim.bo[ev.buf].bufhidden = "wipe"
+            end
+            require("mini.files").open(path, false)
+          end)
+          return true -- delete this autocmd, mini.files handles directories from now on
+        end,
+      })
+    end,
     opts = {
       windows = {
         preview = false,
@@ -449,12 +351,6 @@ return {
         width_preview = 30,
       },
       content = { prefix = function() end }, -- hide icons
-      -- content = {
-      --   prefix = function(fs_entry)
-      --     local icon, hl = MiniFiles.default_prefix(fs_entry)
-      --     return " " .. icon .. " ", hl
-      --   end,
-      -- },
       mappings = {
         close = "<leader>e",
         go_in = "l",
@@ -533,10 +429,10 @@ return {
     -- {{{
     version = false,
     event = "VeryLazy",
-    delay = {
-      text_change = 100, -- default 200
-    },
     opts = {
+      delay = {
+        text_change = 100, -- default 200
+      },
       view = {
         style = "sign",
         signs = {
@@ -576,75 +472,57 @@ return {
     -- }}}
   },
   {
+    -- Improves the built-in `gc` commenting (JSX/TSX and other injected languages)
     "folke/ts-comments.nvim",
     -- {{{
     opts = {},
     event = "VeryLazy",
-    enabled = vim.fn.has "nvim-0.10.0" == 1,
     -- }}}
   },
   {
-    "nvim-mini/mini.comment",
-    -- {{{
-    version = false,
-    event = "VeryLazy",
-    keys = {
-      { "gc", mode = { "n", "v", "x" } },
-    },
-    config = function()
-      require("mini.comment").setup()
-    end,
-    -- }}}
-  },
-  {
+    -- `main` branch: no lazy-loading, no `nvim-treesitter.configs` module.
+    -- Installing parsers requires the `tree-sitter` CLI and a C compiler in PATH.
     "nvim-treesitter/nvim-treesitter",
     -- {{{
-    event = { "BufReadPre", "BufNewFile" },
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-      -- import nvim-treesitter plugin
-      local treesitter = require "nvim-treesitter.configs"
-
-      -- configure treesitter
-      treesitter.setup { -- enable syntax highlighting
-        highlight = {
-          enable = true,
-        },
-        -- enable indentation
-        indent = { enable = true },
-        -- ensure these language parsers are installed
-        ensure_installed = {
-          "json",
-          "javascript",
-          "typescript",
-          "tsx",
-          "yaml",
-          "toml",
-          "html",
-          "css",
-          "markdown",
-          "markdown_inline",
-          "graphql",
-          "bash",
-          "lua",
-          "vim",
-          "dockerfile",
-          "gitignore",
-          "vimdoc",
-          "go",
-          "c",
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<cr>",
-            node_incremental = "<cr>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
+      local parsers = {
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "yaml",
+        "toml",
+        "html",
+        "css",
+        "markdown",
+        "markdown_inline",
+        "graphql",
+        "bash",
+        "lua",
+        "vim",
+        "dockerfile",
+        "gitignore",
+        "vimdoc",
+        "go",
+        "c",
       }
+
+      if vim.fn.executable "tree-sitter" == 1 then
+        require("nvim-treesitter").install(parsers) -- no-op for parsers already installed
+      end
+
+      -- enable highlighting and indentation for every filetype that has a parser
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),
+        callback = function(ev)
+          if pcall(vim.treesitter.start, ev.buf) then
+            vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end,
+      })
     end,
     -- }}}
   },
@@ -653,7 +531,6 @@ return {
     "nvim-mini/mini.completion",
     -- {{{
     version = false,
-    -- commit = "633b22be88dcc937b5b4e023464d2741ff03da7d",
     enabled = true,
     event = "VeryLazy",
     keys = {
@@ -686,76 +563,55 @@ return {
   },
 
   {
+    -- Only provides the server configs (lsp/*.lua); setup uses the built-in vim.lsp API
     "neovim/nvim-lspconfig",
     -- {{{
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      -- import lspconfig plugin
-      local lspconfig = require "lspconfig"
-
-      local keymap = vim.keymap -- for conciseness
-
-      -- Disable semantic tokens (too slow)
-      lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
-        on_attach = function(client)
+      -- Disable semantic tokens (too slow), before any buffer attaches
+      vim.lsp.config("*", {
+        on_init = function(client)
           client.server_capabilities.semanticTokensProvider = nil
         end,
       })
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
         callback = function(ev)
-          -- Buffer local mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf, silent = true }
+          local map = function(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
+          end
 
-          -- set keybinds
-
-          opts.desc = "See available code actions"
-          keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-
-          opts.desc = "Rename symbol"
-          keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
-
-          opts.desc = "Go to previous diagnostic"
-          keymap.set("n", "(d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-          opts.desc = "Go to next diagnostic"
-          keymap.set("n", ")d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
-          opts.desc = "Show documentation for what is under cursor"
-          keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+          map({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, "See available code actions")
+          map("n", "<leader>r", vim.lsp.buf.rename, "Rename symbol")
+          map("n", "(d", function()
+            vim.diagnostic.jump { count = -1 }
+          end, "Go to previous diagnostic")
+          map("n", ")d", function()
+            vim.diagnostic.jump { count = 1 }
+          end, "Go to next diagnostic")
+          map("n", "<leader>k", vim.lsp.buf.hover, "Show documentation for what is under cursor")
         end,
       })
 
-      -- Change the Diagnostic symbols in the sign column (gutter)
-      -- local signs = { Error = "●", Warn = "●", Hint = "●", Info = "●" }
-      -- for type, icon in pairs(signs) do
-      --   local hl = "DiagnosticSign" .. type
-      --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      -- end
-
       -- Highlight line number instead of having icons in sign column
-      for _, diag in ipairs { "Error", "Warn", "Info", "Hint" } do
-        vim.fn.sign_define("DiagnosticSign" .. diag, {
-          text = "",
-          texthl = "DiagnosticSign" .. diag,
-          linehl = "",
-          numhl = "DiagnosticSign" .. diag,
-        })
-      end
-
+      local sev = vim.diagnostic.severity
       vim.diagnostic.config {
         virtual_text = {
           prefix = " ●",
         },
+        signs = {
+          text = { [sev.ERROR] = "", [sev.WARN] = "", [sev.INFO] = "", [sev.HINT] = "" },
+          numhl = {
+            [sev.ERROR] = "DiagnosticSignError",
+            [sev.WARN] = "DiagnosticSignWarn",
+            [sev.INFO] = "DiagnosticSignInfo",
+            [sev.HINT] = "DiagnosticSignHint",
+          },
+        },
       }
 
-      -- local lspservers =  {"ts_ls", "html", "cssls", "tailwindcss", "emmet_ls", "gopls", "denols"}
-      local lspservers = { "vtsls", "gopls" }
-      for i, v in ipairs(lspservers) do
-        lspconfig[v].setup {}
-      end
+      vim.lsp.enable { "vtsls", "gopls" }
     end,
     -- }}}
   },
@@ -795,9 +651,4 @@ return {
     },
     -- }}}
   },
-  -- {
-  --   "aileot/ex-colors.nvim",
-  --   cmd = { "ExColors" },
-  --   opts = {},
-  -- },
 }
