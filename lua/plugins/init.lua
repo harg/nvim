@@ -13,17 +13,7 @@ return {
         dim_inactive = false, -- disabled when transparent
         terminal_colors = true,
         cache = true,
-        styles = {
-          comment = { italic = false },
-          functions = { italic = false, bold = false },
-          functionDeclaration = { bold = false },
-          functionCall = { bold = false },
-          typeDeclaration = { bold = false },
-          controlFlow = { bold = false },
-          keyword = { italic = false, bold = false },
-          statement = { italic = false, bold = false },
-          type = { italic = false },
-        },
+        -- bold / italic are stripped from every group in autocmds.lua
         colors = {
           theme = {},
           palette = {
@@ -34,24 +24,9 @@ return {
         }, -- override default palette and theme colors
         overrides = function() -- override highlight groups
           return {
-            ["@variable.builtin"] = { fg = "#c4746e", italic = false },
+            ["@variable.builtin"] = { fg = "#c4746e" },
             ["WinSeparator"] = { fg = "#363646" },
             ["StatusLineNC"] = { fg = "#858278", bg = "#0f0f15" },
-            Bold = { bold = false },
-            Italic = { italic = false },
-            Boolean = { bold = false },
-            CurSearch = { bold = false },
-            ModeMsg = { bold = false },
-            CursorLineNr = { bold = false },
-            Title = { bold = false },
-            DiffText = { bold = false },
-            Conceal = { bold = false },
-            PmenuMatch = { bold = false },
-            PmenuMatchSel = { bold = false },
-            FloatTitle = { bold = false },
-            MatchParen = { bold = false },
-            MiniFilesTitle = { bold = false },
-            MiniFilesTitleFocused = { bold = false },
           }
         end,
       }
@@ -620,7 +595,7 @@ return {
         },
       }
 
-      vim.lsp.enable { "vtsls", "gopls" }
+      vim.lsp.enable { "tsc", "oxlint", "gopls" }
     end,
     -- }}}
   },
@@ -628,36 +603,49 @@ return {
     "stevearc/conform.nvim",
     -- {{{
     event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
     keys = {
       {
         "<leader>fm",
         function()
-          require("conform").format { async = true, lsp_fallback = true }
+          require("conform").format { async = true, lsp_format = "fallback" }
         end,
         desc = "Format file",
       },
     },
-    opts = {
-      async = true,
-      formatters_by_ft = {
+    opts = function()
+      local formatters_by_ft = {
         lua = { "stylua" },
         go = { "goimports", "gofumpt" },
-        javascript = { "prettier", "prettierd", stop_after_first = true },
-        typescript = { "prettier", "prettierd", stop_after_first = true },
-        javascriptreact = { "prettier", "prettierd", stop_after_first = true },
-        typescriptreact = { "prettier", "prettierd", stop_after_first = true },
-        css = { "prettier", "prettierd", stop_after_first = true },
-        html = { "prettier", "prettierd", stop_after_first = true },
-        json = { "prettier", "prettierd", stop_after_first = true },
-        yaml = { "prettier", "prettierd", stop_after_first = true },
-        markdown = { "prettier", "prettierd", stop_after_first = true },
-        graphql = { "prettier", "prettierd", stop_after_first = true },
-      },
-      format_on_save = { timeout_ms = 500 },
-      default_format_opts = {
-        lsp_format = "fallback",
-      },
-    },
+      }
+      -- oxfmt: fast, Prettier-compatible formatter for the web languages
+      for _, ft in ipairs {
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "css",
+        "scss",
+        "less",
+        "html",
+        "json",
+        "jsonc",
+        "yaml",
+        "markdown",
+        "graphql",
+        "toml",
+      } do
+        formatters_by_ft[ft] = { "oxfmt" }
+      end
+
+      return {
+        formatters_by_ft = formatters_by_ft,
+        format_on_save = { timeout_ms = 500 },
+        default_format_opts = {
+          lsp_format = "fallback",
+        },
+      }
+    end,
     -- }}}
   },
 }

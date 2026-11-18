@@ -58,6 +58,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Neovim in english please
 pcall(vim.cmd, "language en_US.UTF-8")
 
+-- before lazy: its ColorScheme autocmd must exist when the colorscheme plugin loads
+require "autocmds"
+
 -- Don't display deprecation messages
 vim.deprecate = function() end
 
@@ -108,7 +111,6 @@ require("lazy").setup({ { import = "plugins" } }, {
 
 require "gui"
 require "options"
-require "autocmds"
 
 vim.schedule(function()
   require "mappings"

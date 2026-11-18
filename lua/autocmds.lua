@@ -1,5 +1,23 @@
 local group = vim.api.nvim_create_augroup("UserAutocmds", { clear = true })
 
+-- no bold / italic anywhere: strip them from every highlight group after a colorscheme
+-- is applied, and after each plugin loads (lazy-loaded plugins define their own groups)
+local function strip_bold_italic()
+  for name, hl in pairs(vim.api.nvim_get_hl(0, {})) do
+    local cterm = hl.cterm
+    if not hl.link and (hl.bold or hl.italic or (cterm and (cterm.bold or cterm.italic))) then
+      hl.bold, hl.italic = nil, nil
+      if cterm then
+        cterm.bold, cterm.italic = nil, nil
+      end
+      hl.default = nil -- a `default` definition would not replace the existing group
+      vim.api.nvim_set_hl(0, name, hl)
+    end
+  end
+end
+vim.api.nvim_create_autocmd("ColorScheme", { group = group, callback = strip_bold_italic })
+vim.api.nvim_create_autocmd("User", { group = group, pattern = "LazyLoad", callback = strip_bold_italic })
+
 -- disable Linenumbers in Terminals
 vim.api.nvim_create_autocmd("TermOpen", {
   group = group,
