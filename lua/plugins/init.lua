@@ -337,6 +337,9 @@ return {
           vim.schedule(function()
             if vim.api.nvim_buf_is_valid(ev.buf) then
               vim.bo[ev.buf].bufhidden = "wipe"
+              -- tell mini.files this dir buffer was handled: on re-enter (after closing the
+              -- explorer) it deletes the buffer instead of opening the explorer again
+              vim.b[ev.buf].minifiles_processed_dir = true
             end
             require("mini.files").open(path, false)
           end)
@@ -509,6 +512,12 @@ return {
         "go",
         "c",
       }
+
+      -- compile parsers with zig (scoop install zig); only affects nvim and its child processes.
+      -- bin/zig-cc.cmd fixes the target triple that zig can't parse.
+      if jit.os == "Windows" and vim.fn.executable "zig" == 1 then
+        vim.env.CC = vim.fn.stdpath "config" .. "\\bin\\zig-cc.cmd"
+      end
 
       if vim.fn.executable "tree-sitter" == 1 then
         require("nvim-treesitter").install(parsers) -- no-op for parsers already installed
