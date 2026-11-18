@@ -49,14 +49,11 @@ return {
   --   -- }}}
   -- },
   {
-    "sho-87/kanagawa-paper.nvim",
+    "thesimonho/kanagawa-paper",
     -- {{{
-    -- Generate optimized colorscheme
-    -- > Lazy Load kanagawa-paper.nvim
-    -- > ExColors and save. Load the generated colorscheme in init.lua
-    lazy = true, -- don't load by default, only on demand for generating optimized colorscheme
-    event = "VeryLazy",
-    -- priority = 1000,
+    branch = "neovim",
+    lazy = false,
+    priority = 1000,
     config = function()
       require("kanagawa-paper").setup {
         undercurl = false,
@@ -64,10 +61,14 @@ return {
         gutter = false,
         dim_inactive = false, -- disabled when transparent
         terminal_colors = true,
-        cache = false,
+        cache = true,
         styles = {
           comment = { italic = false },
-          functions = { italic = false },
+          functions = { italic = false, bold = false },
+          functionDeclaration = { bold = false },
+          functionCall = { bold = false },
+          typeDeclaration = { bold = false },
+          controlFlow = { bold = false },
           keyword = { italic = false, bold = false },
           statement = { italic = false, bold = false },
           type = { italic = false },
@@ -169,18 +170,6 @@ return {
   --     end
   --   end,
   -- },
-  {
-    "nvim-mini/mini.sessions",
-    version = false,
-    lazy = false,
-    event = "VeryLazy",
-    config = function()
-      require("mini.sessions").setup {
-        autoread = true,
-        force = { read = false, write = true, delete = true },
-      }
-    end,
-  },
   -- On windows machine : put sqlite3.dll in C:\Users\{user}\AppData\Local\Temp\nvim
   -- https://www.sqlite.org/2025/sqlite-dll-win-x64-3480000.zip
   {
@@ -531,19 +520,9 @@ return {
         callback = function(args)
           local buf_id = args.data.buf_id
 
-          vim.keymap.set(
-            "n",
-            opts.mappings and opts.mappings.toggle_hidden or "g.",
-            toggle_dotfiles,
-            { buffer = buf_id, desc = "Toggle hidden files" }
-          )
+          vim.keymap.set("n", opts.mappings and opts.mappings.toggle_hidden or "g.", toggle_dotfiles, { buffer = buf_id, desc = "Toggle hidden files" })
 
-          vim.keymap.set(
-            "n",
-            opts.mappings and opts.mappings.change_cwd or "gc",
-            files_set_cwd,
-            { buffer = args.data.buf_id, desc = "Set cwd" }
-          )
+          vim.keymap.set("n", opts.mappings and opts.mappings.change_cwd or "gc", files_set_cwd, { buffer = args.data.buf_id, desc = "Set cwd" })
         end,
       })
     end,
@@ -816,9 +795,9 @@ return {
     },
     -- }}}
   },
-  {
-    "aileot/ex-colors.nvim",
-    cmd = { "ExColors" },
-    opts = {},
-  },
+  -- {
+  --   "aileot/ex-colors.nvim",
+  --   cmd = { "ExColors" },
+  --   opts = {},
+  -- },
 }
